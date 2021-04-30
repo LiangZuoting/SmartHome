@@ -14,18 +14,18 @@
               "type": "bool",
               "siid": 2,
               "piid": 1,
-              "value": "0",
+              "value": false,
               "trueText": "开",
               "falseText": "关"
             },
             {
               "name": "亮度",
               "type": "range",
-              "min": "0",
-              "max": "100",
+              "min": 0,
+              "max": 100,
               "siid": 2,
               "piid": 3,
-              "value": "0"
+              "value": 0
             },
             {
               "name": "颜色",
@@ -41,7 +41,7 @@
               "max": "6500",
               "siid": 2,
               "piid": 5,
-              "value": "2700"
+              "value": 2700
             }
           ]
         }

@@ -13,7 +13,7 @@ for room in dev_model['rooms']:
 	if 'devices' in room:
 		for dev in room['devices']:
 			if dev['protocol'] == 'miot':
-				miot_devs[dev['ip']] = MiotDevice(dev['ip'], dev['token'])
+				miot_devs[dev['ip']] = MiotDevice(dev['ip'], dev['token'], lazy_discover=False)
 
 
 @app.route('/', methods=['GET'])
@@ -24,8 +24,11 @@ def index():
 @app.route('/', methods=['POST'])
 def update():
 	data = request.get_json()
+	app.logger.info(f'recv post request {data}')
 	if (data['ip'] in miot_devs):
-		miot_devs[data['ip']].set_property_by(data['siid'], data['piid'], data['value'])
+		ret = miot_devs[data['ip']].set_property_by(data['siid'], data['piid'], data['value'])
+		app.logger.info(f'set_property_by result {ret}')
+	return data
 		
 
 @app.route('/init')
@@ -36,5 +39,7 @@ def init():
 			for dev in room['devices']:
 				if dev['ip'] in miot_devs:
 					for prop in dev['properties']:
-						prop['value'] = miot_devs[dev['ip']].get_property_by(prop['siid'], prop['piid'])
+						ret = miot_devs[dev['ip']].get_property_by(prop['siid'], prop['piid']) # ret is a json array
+						prop['value'] = ret[0]['value']
+	app.logger.info(f'init: {dev_model}')
 	return dev_model

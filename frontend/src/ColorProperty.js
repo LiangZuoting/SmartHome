@@ -2,14 +2,12 @@ import React from "react";
 import PropertyFrame from "./PropertyFrame";
 
 function intToColorString(i) {
-  let bgr = ("000000" + i.toString(16)).slice(-6);
-  let rgb = bgr.substr(4, 2) + bgr.substr(2, 2) + bgr.substr(0, 2);
+  let rgb = ("000000" + i.toString(16)).slice(-6);
   return "#" + rgb;
 }
 
 function colorStringToInt(rgb) {
-  let bgr = rgb.substr(5, 2) + rgb.substr(3, 2) + rgb.substr(1, 2);
-  return parseInt(bgr, 16);
+    return parseInt(rgb.substr(1, 2) + rgb.substr(3, 2) + rgb.substr(5, 2), 16);
 }
 
 export default class ColorProperty extends React.Component {

@@ -21,7 +21,7 @@ export default class RangeProperty extends React.Component {
               value={this.state.json.value}
               onChange={(e) => {
                 let json = this.state.json;
-                json.value = e.target.value;
+                json.value = parseInt(e.target.value);
                 this.setState({ json: json });
                 this.props.onChange(this.state.json);
               }}

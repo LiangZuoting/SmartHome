@@ -11,7 +11,9 @@ export default class SmartDevice extends React.Component {
   }
 
   handleChange(json) {
-    console.log(json); // post to python api.
+      console.log(json); // post to python api.
+      json.ip = this.state.json.ip;
+      fetch('/', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(json) });
   }
 
   render() {
