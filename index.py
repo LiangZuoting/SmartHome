@@ -1,6 +1,6 @@
 #!usr/bin/env python3
 import os
-from flask import Flask, render_template, request, json
+from flask import Flask, render_template, request, json, send_from_directory
 from miio import MiotDevice
 
 app = Flask(__name__)
@@ -43,3 +43,18 @@ def init():
 						prop['value'] = ret[0]['value']
 	app.logger.info(f'init: {dev_model}')
 	return dev_model
+
+
+@app.route('/manifest.json')
+def manifest():
+	return send_from_directory('./static', 'manifest.json')
+
+
+@app.route('/logo192.png')
+def logo192():
+	return send_from_directory('./static', 'logo192.png')
+
+
+@app.route('/logo512.png')
+def logo512():
+	return send_from_directory('./static', 'logo512.png')

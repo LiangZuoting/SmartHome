@@ -12,6 +12,7 @@
     "web-vitals": "^1.1.1"
   },
   "scripts": {
+	"postbuild": "xcopy build\\index.html ..\\templates\\ /y && xcopy build\\static ..\\static /y && xcopy build\\favicon.ico ..\\static /y && xcopy build\\logo192.png ..\\static /y && xcopy build\\logo512.png ..\\static /y && xcopy build\\manifest.json ..\\static /y",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
