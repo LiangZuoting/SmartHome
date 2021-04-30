@@ -1,0 +1,66 @@
+{
+  "rooms": [
+    {
+      "name": "阳台",
+      "devices": [
+        {
+          "name": "Nanoleaf 灯带",
+          "protocol": "miot",
+          "ip": "192.168.3.29",
+          "token": "859e247e4c109b6fa628317ae7566e9b",
+          "properties": [
+            {
+              "name": "开关",
+              "type": "bool",
+              "siid": 2,
+              "piid": 1,
+              "value": "0",
+              "trueText": "开",
+              "falseText": "关"
+            },
+            {
+              "name": "亮度",
+              "type": "range",
+              "min": "0",
+              "max": "100",
+              "siid": 2,
+              "piid": 3,
+              "value": "0"
+            },
+            {
+              "name": "颜色",
+              "type": "rgb",
+              "siid": 2,
+              "piid": 4,
+              "value": "0"
+            },
+            {
+              "name": "色温",
+              "type": "range",
+              "min": "2700",
+              "max": "6500",
+              "siid": 2,
+              "piid": 5,
+              "value": "2700"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "客厅"
+    },
+    {
+      "name": "餐厅"
+    },
+    {
+      "name": "厨房"
+    },
+    {
+      "name": "主卧"
+    },
+    {
+      "name": "书房"
+    }
+  ]
+}
