@@ -47,7 +47,7 @@
           "timers": [
             {
               "name": "开夜灯",
-              "description": "每晚 20 点开启夜灯，红色",
+              "description": "每晚 20 点开启夜灯，蓝色",
               "trigger_args": {
                 "trigger": "cron",
                 "hour": "20"
