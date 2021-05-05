@@ -2,8 +2,18 @@
 import os
 from flask import Flask, render_template, request, json, send_from_directory, jsonify
 from miio import MiotDevice
+from apscheduler.schedulers.background import BackgroundScheduler
+
 
 app = Flask(__name__)
+sched = BackgroundScheduler()
+
+
+def scheduler_job(ip, protocol, properties):
+	if protocol == 'miot':
+		for p in properties:
+			miot_devs[ip].set_property_by(p['siid'], p['piid'], p['value'])
+
 
 # connecting to devices when boot
 dev_model = json.load(open(os.path.join('./model', 'devices.json')))
@@ -14,6 +24,12 @@ for room in dev_model['rooms']:
 		for dev in room['devices']:
 			if dev['protocol'] == 'miot':
 				miot_devs[dev['ip']] = MiotDevice(dev['ip'], dev['token'], lazy_discover=False)
+			if 'timers' in dev:
+				for t in dev['timers']:
+					sched.add_job(scheduler_job, args=(dev['ip'], dev['protocol'], t['properties']), **t['trigger_args'])
+
+# start scheduler
+sched.start()
 
 
 @app.route('/', methods=['GET'])

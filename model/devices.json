@@ -43,6 +43,43 @@
               "piid": 5,
               "value": 2700
             }
+          ],
+          "timers": [
+            {
+              "name": "开夜灯",
+              "description": "每晚 20 点开启夜灯，红色",
+              "trigger_args": {
+                "trigger": "cron",
+                "hour": "20"
+              },
+              "properties": [
+                {
+                  "siid": 2,
+                  "piid": 1,
+                  "value": true
+                },
+                {
+                  "siid": 2,
+                  "piid": 4,
+                  "value": 255
+                }
+              ]
+            },
+            {
+              "name": "关夜灯",
+              "description": "每晚 1 点关闭夜灯",
+              "trigger_args": {
+                "trigger": "cron",
+                "hour": "1"
+              },
+              "properties": [
+                {
+                  "siid": 2,
+                  "piid": 1,
+                  "value": false
+                }
+              ]
+            }
           ]
         }
       ]
