@@ -5,8 +5,8 @@ import SwitchPorperty from "./SwitchProperty";
 
 export default class SmartDevice extends React.Component {
   constructor(props) {
-    super(props);
-    this.state = { json: props.json };
+      super(props);
+      this.state = { json: props.json, currentScene: null };
     this.handleChange = this.handleChange.bind(this);
   }
 
@@ -62,7 +62,18 @@ export default class SmartDevice extends React.Component {
                   return property.name;
               }
             })}
-          </div>
+                </div>
+                {this.state.json.scenes === null ? "" : <div className="modal-footer">
+                    {this.state.json.scenes.map((scene, index) => {
+                        <button className={currentScene == index ? "btn btn-lg btn-primary" : "btn btn-lg"} onClick={() => {
+                            this.setState({ currentScene: index });
+                            scene.properties.map((property) => { this.handleChange(property) })
+                        }
+                    }>
+                            { scene.name }
+                            </button>
+                    })}
+                </div>}
         </div>
       </div>
     );

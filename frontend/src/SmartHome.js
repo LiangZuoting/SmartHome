@@ -16,8 +16,7 @@ export default class SmartHome extends React.Component {
       <div className="container">
             <div className="columns col-oneline">
             {this.state.json === null ? "" : this.state.json.rooms.map((room, index) => (
-            <button
-              className="btn btn-lg column col-4 text-center"
+            <button className={this.state.index == index ? "btn btn-lg column col-4 text-center btn-primary" : "btn btn-lg column col-4 text-center"}
               key={index}
               onClick={() => {
                 this.setState({ index: index });

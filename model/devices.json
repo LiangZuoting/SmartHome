@@ -80,6 +80,50 @@
                 }
               ]
             }
+          ],
+          "scenes": [
+            {
+              "name": "照明",
+              "description": "亮度 100%，白光，色温 6500",
+              "properties": [
+                {
+                  "siid": 2,
+                  "piid": 3,
+                  "value": 100
+                },
+                {
+                  "siid": 2,
+                  "piid": 4,
+                  "value": 16777215
+                },
+                {
+                  "siid": 2,
+                  "piid": 5,
+                  "value": 6500
+                }
+              ]
+            },
+            {
+              "name": "情趣",
+              "description": "亮度 50%，浅红色，色温 2700",
+              "properties": [
+                {
+                  "siid": 2,
+                  "piid": 3,
+                  "value": 50
+                },
+                {
+                  "siid": 2,
+                  "piid": 4,
+                  "value": 16676723
+                },
+                {
+                  "siid": 2,
+                  "piid": 5,
+                  "value": 2700
+                }
+              ]
+            }
           ]
         }
       ]

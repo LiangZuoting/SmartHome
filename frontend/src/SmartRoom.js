@@ -14,7 +14,7 @@ export default class SmartRoom extends React.Component {
             return this.props.json.devices.map((device, index) => (
               <div key={index} className="m-2 p-2">
                 <a href="#device-modal">
-                  <div className="text-center">{device.name}</div>
+                    <BriefDevice json={device} />
                 </a>
                 <SmartDevice json={this.props.json.devices[index]} />
               </div>
