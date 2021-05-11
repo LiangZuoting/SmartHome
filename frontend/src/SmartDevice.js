@@ -39,15 +39,21 @@ export default class SmartDevice extends React.Component {
                     <SwitchPorperty
                       key={index}
                       json={property}
-                      onChange={(json) => this.handleChange(json)}
+                          onChange={(json) => {
+                              this.setState({ currentScene: null });
+                              this.handleChange(json);
+                          }}
                     />
                   );
                 case "range":
                   return (
                     <RangeProperty
-                      key={index}
-                      json={property}
-                      onChange={(json) => this.handleChange(json)}
+                          key={index}
+                          json={property}
+                          onChange={(json) => {
+                              this.setState({ currentScene: null });
+                              this.handleChange(json);
+                          }}
                     />
                   );
                 case "rgb":
@@ -55,7 +61,10 @@ export default class SmartDevice extends React.Component {
                     <ColorProperty
                       key={index}
                       json={property}
-                      onChange={(json) => this.handleChange(json)}
+                          onChange={(json) => {
+                              this.setState({ currentScene: null });
+                              this.handleChange(json);
+                          }}
                     />
                   );
                 default:
