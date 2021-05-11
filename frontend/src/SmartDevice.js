@@ -74,9 +74,9 @@ export default class SmartDevice extends React.Component {
                 </div>
                 {this.state.json.scenes === null ? "" : <div className="modal-footer">
                     {this.state.json.scenes.map((scene, index) => {
-                        <button className={currentScene == index ? "btn btn-lg btn-primary" : "btn btn-lg"} onClick={() => {
+                        return <button className={this.state.currentScene === index ? "btn btn-lg btn-primary" : "btn btn-lg"} onClick={() => {
                             this.setState({ currentScene: index });
-                            scene.properties.map((property) => { this.handleChange(property) })
+                            scene.properties.map((property) => { return this.handleChange(property) })
                         }
                     }>
                             { scene.name }

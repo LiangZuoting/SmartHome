@@ -1,4 +1,5 @@
 import React from "react";
+import BriefDevice from "./BriefDevice";
 import SmartDevice from "./SmartDevice";
 
 export default class SmartRoom extends React.Component {
@@ -14,7 +15,7 @@ export default class SmartRoom extends React.Component {
             return this.props.json.devices.map((device, index) => (
               <div key={index} className="m-2 p-2">
                 <a href="#device-modal">
-                    <BriefDevice json={device} />
+                        <BriefDevice json={device} />
                 </a>
                 <SmartDevice json={this.props.json.devices[index]} />
               </div>
