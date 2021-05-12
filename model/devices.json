@@ -105,7 +105,7 @@
             },
             {
               "name": "情趣",
-              "description": "亮度 50%，浅红色，色温 2700",
+              "description": "亮度 50%，浅红色",
               "properties": [
                 {
                   "siid": 2,
@@ -116,11 +116,6 @@
                   "siid": 2,
                   "piid": 4,
                   "value": 16676723
-                },
-                {
-                  "siid": 2,
-                  "piid": 5,
-                  "value": 2700
                 }
               ]
             }
