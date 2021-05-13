@@ -89,7 +89,7 @@ export default class SmartHome extends React.Component {
                     return this.createDevice(device, index);
                 })}
                 </svg>
-                <SmartDevice json={this.state.json.devices[this.state.index]} />
+                {this.state.json === null ? "" : <SmartDevice json={this.state.json.devices[this.state.index]} />}
             </div>
         );
     }
