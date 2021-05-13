@@ -76,7 +76,12 @@ export default class SmartDevice extends React.Component {
                     {this.state.json.scenes.map((scene, index) => {
                         return <button key={index} className={this.state.currentScene === index ? "btn btn-lg btn-primary" : "btn btn-lg"} onClick={() => {
                             this.setState({ currentScene: index });
-                            scene.properties.map((property) => { return this.handleChange(property) })
+                            scene.properties.map((property) => {
+                                let json = this.state.json;
+                                json.properties.find(p => p.id === property.id).value = property.value;
+                                this.setState({ json: json });
+                                return this.handleChange(property)
+                            })
                         }
                     }>
                             { scene.name }

@@ -15,6 +15,7 @@
         {
           "name": "开关",
           "type": "bool",
+          "id": "2-1",
           "siid": 2,
           "piid": 1,
           "value": false,
@@ -26,6 +27,7 @@
           "type": "range",
           "min": 0,
           "max": 100,
+          "id": "2-3",
           "siid": 2,
           "piid": 3,
           "value": 0
@@ -33,6 +35,7 @@
         {
           "name": "颜色",
           "type": "rgb",
+          "id": "2-4",
           "siid": 2,
           "piid": 4,
           "value": "0"
@@ -42,6 +45,7 @@
           "type": "range",
           "min": "2700",
           "max": "6500",
+          "id": "2-5",
           "siid": 2,
           "piid": 5,
           "value": 2700
@@ -57,11 +61,13 @@
           },
           "properties": [
             {
+              "id": "2-1",
               "siid": 2,
               "piid": 1,
               "value": true
             },
             {
+              "id": "2-4",
               "siid": 2,
               "piid": 4,
               "value": 255
@@ -77,6 +83,7 @@
           },
           "properties": [
             {
+              "id": "2-1",
               "siid": 2,
               "piid": 1,
               "value": false
@@ -90,16 +97,19 @@
           "description": "亮度 100%，白光，色温 6500",
           "properties": [
             {
+              "id": "2-3",
               "siid": 2,
               "piid": 3,
               "value": 100
             },
             {
+              "id": "2-4",
               "siid": 2,
               "piid": 4,
               "value": 16777215
             },
             {
+              "id": "2-5",
               "siid": 2,
               "piid": 5,
               "value": 6500
@@ -111,11 +121,13 @@
           "description": "亮度 50%，浅红色",
           "properties": [
             {
+              "id": "2-3",
               "siid": 2,
               "piid": 3,
               "value": 50
             },
             {
+              "id": "2-4",
               "siid": 2,
               "piid": 4,
               "value": 16676723
