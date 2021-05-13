@@ -4,7 +4,7 @@ import SmartDevice from "./SmartDevice";
 export default class SmartHome extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { json: JSON.parse(props.json), index: 0 };
+        this.state = { json: null, index: 0 };
     }
 
     componentDidMount() {
