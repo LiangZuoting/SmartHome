@@ -8,12 +8,16 @@
 
 后端：[Flask](https://flask.palletsprojects.com/en/1.1.x/)
 
-数据模型：`model/devices.json`。四层抽象：家—房间—设备—属性。
+数据模型：`model/devices.json`。~~四层抽象：家—房间—设备—属性。~~ 
 
 其它主要依赖：
 
 + [python-miio](https://pypi.org/project/python-miio/)，[小米Iot 设备协议规范](https://iot.mi.com/new/doc/design/spec/overall) 的 Python 实现。
 + [APScheduler](https://github.com/agronholm/apscheduler)，时间调度，用来完成定时控制。
+
+## UI、UX 设计
+
+首页以 SVG 绘制出户型图后，通过数据模型动态放置所有设备到 SVG 图相应位置。点击设备后跳转到设备编辑页面。
 
 ## 部署
 

@@ -1,142 +1,128 @@
 {
-  "rooms": [
+  "devices": [
     {
-      "name": "阳台",
-      "devices": [
+      "name": "Nanoleaf 灯带",
+      "protocol": "miot",
+      "ip": "192.168.3.29",
+      "token": "859e247e4c109b6fa628317ae7566e9b",
+      "x": 60,
+      "y": 100,
+      "shape": "line",
+      "width": 30,
+      "height": 100,
+      "color": "black",
+      "properties": [
         {
-          "name": "Nanoleaf 灯带",
-          "protocol": "miot",
-          "ip": "192.168.3.29",
-          "token": "859e247e4c109b6fa628317ae7566e9b",
+          "name": "开关",
+          "type": "bool",
+          "siid": 2,
+          "piid": 1,
+          "value": false,
+          "trueText": "开",
+          "falseText": "关"
+        },
+        {
+          "name": "亮度",
+          "type": "range",
+          "min": 0,
+          "max": 100,
+          "siid": 2,
+          "piid": 3,
+          "value": 0
+        },
+        {
+          "name": "颜色",
+          "type": "rgb",
+          "siid": 2,
+          "piid": 4,
+          "value": "0"
+        },
+        {
+          "name": "色温",
+          "type": "range",
+          "min": "2700",
+          "max": "6500",
+          "siid": 2,
+          "piid": 5,
+          "value": 2700
+        }
+      ],
+      "timers": [
+        {
+          "name": "开夜灯",
+          "description": "每晚 20 点开启夜灯，蓝色",
+          "trigger_args": {
+            "trigger": "cron",
+            "hour": "20"
+          },
           "properties": [
             {
-              "name": "开关",
-              "type": "bool",
               "siid": 2,
               "piid": 1,
-              "value": false,
-              "trueText": "开",
-              "falseText": "关"
+              "value": true
             },
             {
-              "name": "亮度",
-              "type": "range",
-              "min": 0,
-              "max": 100,
-              "siid": 2,
-              "piid": 3,
-              "value": 0
-            },
-            {
-              "name": "颜色",
-              "type": "rgb",
               "siid": 2,
               "piid": 4,
-              "value": "0"
+              "value": 255
+            }
+          ]
+        },
+        {
+          "name": "关夜灯",
+          "description": "每晚 1 点关闭夜灯",
+          "trigger_args": {
+            "trigger": "cron",
+            "hour": "1"
+          },
+          "properties": [
+            {
+              "siid": 2,
+              "piid": 1,
+              "value": false
+            }
+          ]
+        }
+      ],
+      "scenes": [
+        {
+          "name": "照明",
+          "description": "亮度 100%，白光，色温 6500",
+          "properties": [
+            {
+              "siid": 2,
+              "piid": 3,
+              "value": 100
             },
             {
-              "name": "色温",
-              "type": "range",
-              "min": "2700",
-              "max": "6500",
+              "siid": 2,
+              "piid": 4,
+              "value": 16777215
+            },
+            {
               "siid": 2,
               "piid": 5,
-              "value": 2700
+              "value": 6500
             }
-          ],
-          "timers": [
+          ]
+        },
+        {
+          "name": "情趣",
+          "description": "亮度 50%，浅红色",
+          "properties": [
             {
-              "name": "开夜灯",
-              "description": "每晚 20 点开启夜灯，蓝色",
-              "trigger_args": {
-                "trigger": "cron",
-                "hour": "20"
-              },
-              "properties": [
-                {
-                  "siid": 2,
-                  "piid": 1,
-                  "value": true
-                },
-                {
-                  "siid": 2,
-                  "piid": 4,
-                  "value": 255
-                }
-              ]
+              "siid": 2,
+              "piid": 3,
+              "value": 50
             },
             {
-              "name": "关夜灯",
-              "description": "每晚 1 点关闭夜灯",
-              "trigger_args": {
-                "trigger": "cron",
-                "hour": "1"
-              },
-              "properties": [
-                {
-                  "siid": 2,
-                  "piid": 1,
-                  "value": false
-                }
-              ]
-            }
-          ],
-          "scenes": [
-            {
-              "name": "照明",
-              "description": "亮度 100%，白光，色温 6500",
-              "properties": [
-                {
-                  "siid": 2,
-                  "piid": 3,
-                  "value": 100
-                },
-                {
-                  "siid": 2,
-                  "piid": 4,
-                  "value": 16777215
-                },
-                {
-                  "siid": 2,
-                  "piid": 5,
-                  "value": 6500
-                }
-              ]
-            },
-            {
-              "name": "情趣",
-              "description": "亮度 50%，浅红色",
-              "properties": [
-                {
-                  "siid": 2,
-                  "piid": 3,
-                  "value": 50
-                },
-                {
-                  "siid": 2,
-                  "piid": 4,
-                  "value": 16676723
-                }
-              ]
+              "siid": 2,
+              "piid": 4,
+              "value": 16676723
             }
           ]
         }
       ]
-    },
-    {
-      "name": "客厅"
-    },
-    {
-      "name": "餐厅"
-    },
-    {
-      "name": "厨房"
-    },
-    {
-      "name": "主卧"
-    },
-    {
-      "name": "书房"
     }
   ]
 }
