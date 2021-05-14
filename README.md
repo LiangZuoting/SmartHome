@@ -8,7 +8,17 @@
 
 后端：[Flask](https://flask.palletsprojects.com/en/1.1.x/)
 
-数据模型：`model/devices.json`。~~四层抽象：家—房间—设备—属性。~~ 
+**数据模型：`model/devices.json`**
+
+常用属性：
+
++ `shape`：设备外观形状。`line` 即矩形，以 `x` `y` `width` `height` 描述边框；`circle` 即圆形，以 `x` `y` `radius` 描述原点和半径。
+
++ `color`：`shape` 的填充色。
+
++ `properties`：可调节的设备参数集。`"name": "开关"` 是预置属性，关联设备的开关状态。通常所有设备都应该有且唯一，可以通过查询 `name` 获取设备是否正在运行。
+
++ 设备参数描述属性：根据不同设备能力各自不同，但格式统一：必须是 `properties` 数组下的一个对象；必须有 `id` 和 `value` 两个固定属性。`id` 要求全局唯一；`value` 标识设备参数当前值。
 
 其它主要依赖：
 

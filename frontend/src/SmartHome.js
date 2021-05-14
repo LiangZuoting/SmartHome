@@ -22,7 +22,7 @@ export default class SmartHome extends React.Component {
                         fill="transparent"
                         stroke="black"
                     />
-                    <text x="10" y="10">
+                    <text x="10" y="10" alignmentBaseline="hanging">
                         阳台
           </text>
                     {/* 客厅: 160, 10, 340, 340
@@ -35,16 +35,16 @@ export default class SmartHome extends React.Component {
                         fill="transparent"
                         stroke="black"
                     />
-                    <text x="160" y="10">
+                    <text x="160" y="10" alignmentBaseline="hanging">
                         客厅
           </text>
-                    <text x="620" y="10">
+                    <text x="620" y="10" alignmentBaseline="hanging">
                         餐厅
           </text>
-                    <text x="880" y="150">
+                    <text x="880" y="150" alignmentBaseline="hanging">
                         厨房
           </text>
-                    <text x="880" y="10">
+                    <text x="880" y="10" alignmentBaseline="hanging">
                         玄关
           </text>
                     {/* 次卧: 160, 350, 340, 290 */}
@@ -53,7 +53,7 @@ export default class SmartHome extends React.Component {
                         fill="transparent"
                         stroke="black"
                     />
-                    <text x="160" y="350">
+                    <text x="160" y="350" alignmentBaseline="hanging">
                         次卧
           </text>
                     {/* 主卧: 160, 640, 340, 330
@@ -64,10 +64,10 @@ export default class SmartHome extends React.Component {
                         fill="transparent"
                         stroke="black"
                     />
-                    <text x="160" y="640">
+                    <text x="160" y="640" alignmentBaseline="hanging">
                         主卧
           </text>
-                    <text x="500" y="760">
+                    <text x="500" y="760" alignmentBaseline="hanging">
                         主卫
           </text>
                     {/* 客卫: 620, 350, 260, 170
@@ -78,10 +78,10 @@ export default class SmartHome extends React.Component {
                         fill="transparent"
                         stroke="black"
                     />
-                    <text x="620" y="350">
+                    <text x="620" y="350" alignmentBaseline="hanging">
                         客卫
           </text>
-                    <text x="620" y="520">
+                    <text x="620" y="520" alignmentBaseline="hanging">
                         书房
           </text>
                 </g>
