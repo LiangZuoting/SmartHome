@@ -8,7 +8,6 @@ from apscheduler.schedulers.background import BackgroundScheduler
 app = Flask(__name__)
 sched = BackgroundScheduler()
 
-
 def scheduler_job(ip, protocol, properties):
 	if protocol == 'miot':
 		for p in properties:
@@ -40,8 +39,23 @@ def index():
 def update():
 	data = request.get_json()
 	app.logger.info(f'recv post request {data}')
-	if (data['ip'] in miot_devs):
-		ret = miot_devs[data['ip']].set_property_by(data['siid'], data['piid'], data['value'])
+	ip = data['ip']
+	if (ip in miot_devs):
+		ret = 0
+		dev = miot_devs[ip]
+		if data['from'] == 'monitor': # post from ipc
+			status = dev.get_property_by(data['siid'], data['piid'])[0]['value']
+			if data['value']:
+				sched.remove_job(ip)
+				unique_jobs.pop(ip, None)
+				if not status:
+					ret = dev.set_property_by(data['siid'], data['piid'], data['value'])
+			else:
+				if not sched.get_job(ip) and status:
+					# when nobody, closing it 2 minutes later
+					sched.add_job(scheduler_job, args=(ip, dev['protocol'], [data]), trigger='interval', minutes=2, id=ip)
+		else:
+			ret = dev.set_property_by(data['siid'], data['piid'], data['value'])
 		app.logger.info(f'set_property_by result {ret}')
 	return jsonify(data)
 		
