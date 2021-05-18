@@ -1,12 +1,38 @@
 #!usr/bin/env python3
 import os
 from flask import Flask, render_template, request, json, send_from_directory, jsonify
+from flask.logging import default_handler
 from miio import MiotDevice
 from apscheduler.schedulers.background import BackgroundScheduler
+import logging
+from logging.config import dictConfig
+from logging.handlers import RotatingFileHandler
 
 
+if not os.path.exists('logs'):
+	os.mkdir('logs')
+dictConfig({
+    'version': 1,
+    'formatters': {'default': {
+        'format': '[%(asctime)s] %(levelname)s in %(module)s: %(message)s',
+    }},
+    'handlers': {'file': {
+        'class': 'logging.handlers.RotatingFileHandler',
+		'filename': 'logs/flask.log',
+		'maxBytes': 4096000,
+		'backupCount': 10,
+        'formatter': 'default'
+    }},
+    'root': {
+        'level': 'INFO',
+        'handlers': ['file']
+    }
+})
 app = Flask(__name__)
+app.logger.info('flask started...')
+	
 sched = BackgroundScheduler()
+
 
 def scheduler_job(ip, protocol, properties):
 	if protocol == 'miot':
@@ -38,26 +64,24 @@ def index():
 @app.route('/', methods=['POST'])
 def update():
 	data = request.get_json()
-	app.logger.info(f'recv post request {data}')
 	ip = data['ip']
 	if (ip in miot_devs):
-		ret = 0
 		dev = miot_devs[ip]
 		# post from ipc
 		# it should only be SWITCH property posted.
-		if data['from'] == 'monitor':
+		if 'from' in data and data['from'] == 'monitor':
 			status = dev.get_property_by(data['siid'], data['piid'])[0]['value']
 			if data['value']:
-				sched.remove_job(ip)
+				if sched.get_job(ip):
+					sched.remove_job(ip)
 				if not status:
-					ret = dev.set_property_by(data['siid'], data['piid'], data['value'])
+					dev.set_property_by(data['siid'], data['piid'], data['value'])
 			else:
 				if not sched.get_job(ip) and status:
 					# when nobody, closing it 2 minutes later
-					sched.add_job(scheduler_job, args=(ip, dev['protocol'], [data]), trigger='interval', minutes=2, id=ip)
+					sched.add_job(scheduler_job, args=(ip, data['protocol'], [data]), trigger='interval', minutes=2, id=ip)
 		else:
-			ret = dev.set_property_by(data['siid'], data['piid'], data['value'])
-		app.logger.info(f'set_property_by result {ret}')
+			dev.set_property_by(data['siid'], data['piid'], data['value'])
 	return jsonify(data)
 		
 
