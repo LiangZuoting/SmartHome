@@ -43,11 +43,12 @@ def update():
 	if (ip in miot_devs):
 		ret = 0
 		dev = miot_devs[ip]
-		if data['from'] == 'monitor': # post from ipc
+		# post from ipc
+		# it should only be SWITCH property posted.
+		if data['from'] == 'monitor':
 			status = dev.get_property_by(data['siid'], data['piid'])[0]['value']
 			if data['value']:
 				sched.remove_job(ip)
-				unique_jobs.pop(ip, None)
 				if not status:
 					ret = dev.set_property_by(data['siid'], data['piid'], data['value'])
 			else:
