@@ -102,6 +102,11 @@ def manifest():
 	return send_from_directory('./', 'manifest.json')
 
 
+@app.route('/favicon.ico')
+def favicon():
+	return send_from_directory('./', 'favicon.ico')
+
+
 @app.route('/logo192.png')
 def logo192():
 	return send_from_directory('./', 'logo192.png')
