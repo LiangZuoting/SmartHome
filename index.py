@@ -110,3 +110,18 @@ def logo192():
 @app.route('/logo512.png')
 def logo512():
 	return send_from_directory('./', 'logo512.png')
+
+
+@app.route('/images/ac.svg')
+def ac():
+	return send_from_directory('./images/', 'ac.svg')
+
+
+@app.route('/images/ceilinglight.svg')
+def ceilinglight():
+	return send_from_directory('./images/', 'ceilinglight.svg')
+
+
+@app.route('/images/lightstrip.svg')
+def lightstrip():
+	return send_from_directory('./images/', 'lightstrip.svg')

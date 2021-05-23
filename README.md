@@ -12,7 +12,7 @@
 
 常用属性：
 
-+ `shape`：设备外观形状。`line` 即矩形，以 `x` `y` `width` `height` 描述边框；`circle` 即圆形，以 `x` `y` `radius` 描述原点和半径。
++ `ui`：设备对应的 svg 图片 url。
 
 + `color`：`shape` 的填充色。
 

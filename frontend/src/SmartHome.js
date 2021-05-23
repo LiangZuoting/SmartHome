@@ -99,25 +99,14 @@ export default class SmartHome extends React.Component {
                     return this.createDevice(device, index);
                 })}
                 </svg>
-                {this.state.json === null ? "" : <SmartDevice json={this.state.json.devices[this.state.index]} />}
             </div>
         );
     }
 
     createDevice(device, index) {
-        switch (device.shape) {
-            case "line":
-                return <g key={index}><rect x={device.x} y={device.y} width={device.width} height={device.height} fill={device.color} pointerEvents="auto" onClick={(index) => {
-                    this.setState({ index: index });
-                    window.location.href = "#device-modal";
-                }} />
-                    <foreignObject stroke="white" x={device.x} y={device.y} width={device.width} height={device.height}>
-                        <div className="text-light container">
-                            {device.name}
-                            </div>
-                    </foreignObject></g>
-            default:
-                return "";
-        }
+        return <image key={index} xlinkHref={device.ui} x={device.x} y={device.y} width={device.width} height={device.height} onClick={(index) => {
+            this.setState({ index: index });
+            window.location.href = "#device-modal";
+        }} />;
     }
 }

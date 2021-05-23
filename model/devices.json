@@ -7,7 +7,7 @@
       "token": "859e247e4c109b6fa628317ae7566e9b",
       "x": 60,
       "y": 100,
-      "shape": "line",
+      "ui": "/images/lightstrip.svg",
       "width": 30,
       "height": 100,
       "color": "black",
