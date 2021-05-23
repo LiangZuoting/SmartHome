@@ -8,8 +8,8 @@
       "x": 60,
       "y": 100,
       "ui": "/images/lightstrip.svg",
-      "width": 30,
-      "height": 100,
+      "width": 102,
+      "height": 128,
       "color": "black",
       "properties": [
         {

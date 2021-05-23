@@ -99,12 +99,13 @@ export default class SmartHome extends React.Component {
                     return this.createDevice(device, index);
                 })}
                 </svg>
+                {this.state.json === null ? "" : <SmartDevice json={this.state.json.devices[this.state.index]} />}
             </div>
         );
     }
 
     createDevice(device, index) {
-        return <image key={index} xlinkHref={device.ui} x={device.x} y={device.y} width={device.width} height={device.height} onClick={(index) => {
+        return <image xlinkHref={device.ui} key={index} x={device.x} y={device.y} width={device.width} height={device.height} pointerEvents="auto" onClick={(index) => {
             this.setState({ index: index });
             window.location.href = "#device-modal";
         }} />;
