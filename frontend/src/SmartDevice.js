@@ -31,48 +31,48 @@ export default class SmartDevice extends React.Component {
               {this.state.json.name}
             </div>
           </div>
-          <div className="modal-body">
-            {this.state.json.properties.map((property, index) => {
-              switch (property.type) {
-                case "bool":
-                  return (
-                    <SwitchPorperty
-                      key={index}
-                      json={property}
-                          onChange={(json) => {
-                              this.setState({ currentScene: null });
-                              this.handleChange(json);
-                          }}
-                    />
-                  );
-                case "range":
-                  return (
-                    <RangeProperty
-                          key={index}
-                          json={property}
-                          onChange={(json) => {
-                              this.setState({ currentScene: null });
-                              this.handleChange(json);
-                          }}
-                    />
-                  );
-                case "rgb":
-                  return (
-                    <ColorProperty
-                      key={index}
-                      json={property}
-                          onChange={(json) => {
-                              this.setState({ currentScene: null });
-                              this.handleChange(json);
-                          }}
-                    />
-                  );
-                default:
-                  return property.name;
-              }
-            })}
-                </div>
-                {this.state.json.scenes === null ? "" : <div className="modal-footer">
+                {this.state.json.hasOwnProperty("properties") ? <div className="modal-body">
+                    {this.state.json.properties.map((property, index) => {
+                        switch (property.type) {
+                            case "bool":
+                                return (
+                                    <SwitchPorperty
+                                        key={index}
+                                        json={property}
+                                        onChange={(json) => {
+                                            this.setState({ currentScene: null });
+                                            this.handleChange(json);
+                                        }}
+                                    />
+                                );
+                            case "range":
+                                return (
+                                    <RangeProperty
+                                        key={index}
+                                        json={property}
+                                        onChange={(json) => {
+                                            this.setState({ currentScene: null });
+                                            this.handleChange(json);
+                                        }}
+                                    />
+                                );
+                            case "rgb":
+                                return (
+                                    <ColorProperty
+                                        key={index}
+                                        json={property}
+                                        onChange={(json) => {
+                                            this.setState({ currentScene: null });
+                                            this.handleChange(json);
+                                        }}
+                                    />
+                                );
+                            default:
+                                return property.name;
+                        }
+                    })}
+                </div> : ""}
+                {this.state.json.hasOwnProperty("scenes") ? <div className="modal-footer">
                     {this.state.json.scenes.map((scene, index) => {
                         return <button key={index} className={this.state.currentScene === index ? "btn btn-lg btn-primary" : "btn btn-lg"} onClick={() => {
                             this.setState({ currentScene: index });
@@ -87,7 +87,7 @@ export default class SmartDevice extends React.Component {
                             { scene.name }
                             </button>
                     })}
-                </div>}
+                </div> : "" }
         </div>
       </div>
     );
