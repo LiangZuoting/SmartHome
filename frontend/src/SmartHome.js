@@ -1,10 +1,12 @@
 import React from "react";
 import SmartDevice from "./SmartDevice";
 
+
 export default class SmartHome extends React.Component {
     constructor(props) {
         super(props);
         this.state = { json: null, index: 0 };
+        this.deviceRef = React.createRef();
     }
 
     componentDidMount() {
@@ -117,14 +119,15 @@ export default class SmartHome extends React.Component {
                     return this.createDevice(device, index);
                 })}
                 </svg>
-                {this.state.json === null ? "" : <SmartDevice json={this.state.json.devices[this.state.index]} />}
+                {this.state.json === null ? "" : <SmartDevice ref={this.deviceRef} json={this.state.json.devices[this.state.index]} />}
             </div>
         );
     }
 
     createDevice(device, index) {
-        return <image xlinkHref={device.ui} key={index} x={device.x} y={device.y} width={device.width} height={device.height} pointerEvents="auto" onClick={(index) => {
+        return <image xlinkHref={device.ui} key={index} x={device.x} y={device.y} width={device.width} height={device.height} pointerEvents="auto" onClick={() => {
             this.setState({ index: index });
+            this.deviceRef.current.update(device);
             window.location.href = "#device-modal";
         }} />;
     }

@@ -8,7 +8,11 @@ export default class SmartDevice extends React.Component {
       super(props);
       this.state = { json: props.json, currentScene: null };
     this.handleChange = this.handleChange.bind(this);
-  }
+    }
+
+    update(json) {
+        this.setState({ json: json });
+    }
 
   handleChange(json) {
       console.log(json); // post to python api.
@@ -17,7 +21,8 @@ export default class SmartDevice extends React.Component {
   }
 
   render() {
-    return (
+      return (
+          this.state.json == null ? "" :
       <div className="modal modal-lg" id="device-modal">
         <a href="#close" className="modal-overlay" aria-label="Close"></a>
         <div className="modal-container">

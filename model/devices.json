@@ -2,7 +2,8 @@
   "devices": [
     {
       "name": "客厅吸顶灯",
-      "protocol": "miot",
+      "protocol": "fake",
+      "ip": "192.168.4.1",
       "ui": "/images/ceilinglight.svg",
       "x": 300,
       "y": 140,
@@ -12,6 +13,7 @@
     {
       "name": "客厅空调",
       "protocol": "gree",
+      "ip": "192.168.4.2",
       "ui": "/images/ac.svg",
       "x": 152.5,
       "y": 12.5,
