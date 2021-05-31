@@ -2,7 +2,7 @@
 import os
 from flask import Flask, render_template, request, json, send_from_directory, jsonify
 from flask.logging import default_handler
-from miio import MiotDevice
+from miio import MiotDevice, DeviceException
 from apscheduler.schedulers.background import BackgroundScheduler
 import logging
 from logging.config import dictConfig
@@ -88,12 +88,16 @@ def update():
 @app.route('/model/init')
 def init():	
 	# get latest status of devices each request
-	for dev in dev_model['devices']:
-		if dev['ip'] in miot_devs:
-			for prop in dev['properties']:
-				ret = miot_devs[dev['ip']].get_property_by(prop['siid'], prop['piid']) # ret is a json array
-				prop['value'] = ret[0]['value']
-	app.logger.info(f'init: {dev_model}')
+	try:
+		for dev in dev_model['devices']:
+			if dev['ip'] in miot_devs:
+				for prop in dev['properties']:
+					ret = miot_devs[dev['ip']].get_property_by(prop['siid'], prop['piid']) # ret is a json array
+					prop['value'] = ret[0]['value']
+		app.logger.info(f'init: {dev_model}')
+	except DeviceException as error:
+		app.logger.error(format(error))
+
 	return jsonify(dev_model)
 
 
@@ -117,16 +121,6 @@ def logo512():
 	return send_from_directory('./', 'logo512.png')
 
 
-@app.route('/images/ac.svg')
-def ac():
-	return send_from_directory('./images/', 'ac.svg')
-
-
-@app.route('/images/ceilinglight.svg')
-def ceilinglight():
-	return send_from_directory('./images/', 'ceilinglight.svg')
-
-
-@app.route('/images/lightstrip.svg')
-def lightstrip():
-	return send_from_directory('./images/', 'lightstrip.svg')
+@app.route('/images/<name>')
+def ac(name):
+	return send_from_directory('./images/', name)

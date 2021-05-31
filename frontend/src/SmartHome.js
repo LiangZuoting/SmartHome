@@ -16,7 +16,7 @@ export default class SmartHome extends React.Component {
     render() {
         return (
             <div className="container root">
-                <svg width="1160" height="980" pointerEvents="none">
+                <svg width="1360" height="980" pointerEvents="none">
                 <g alignmentBaseline="hanging">
                     {/* 阳台: 10, 10, 150, 340 */}
                         <rect x="10" y="10" width="150" height="340" fill="#EDEDED" />
