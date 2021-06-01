@@ -48,7 +48,7 @@ export default class SmartHome extends React.Component {
 
                         {/* 阳台: 10, 10, 150, 340 */}
                     <path
-                            d="M 10 10 h 147.5 v 80 M 12.5 10 v 340 h 147.5 v -80"
+                            d="M 10 10 h 150 v 80 M 12.5 10 v 340 h 147.5 v -80"
                         fill="transparent"
                         stroke="black" strokeWidth="5"
                         />
