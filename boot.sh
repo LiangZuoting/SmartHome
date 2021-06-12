@@ -1,3 +1,3 @@
 sudo /etc/init.d/nginx start
 cd /home/pi/SmartHome
-gunicorn -w 4 -b 127.0.0.1:5000 index:app
+python3 -m sanic server.app --host=127.0.0.1 --port=9876 --workers=4

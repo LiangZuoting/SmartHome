@@ -6,7 +6,7 @@
 
 前端：[React.js](https://reactjs.org/) + [Spectre.css](https://picturepan2.github.io/spectre/)
 
-后端：[Flask](https://flask.palletsprojects.com/en/1.1.x/)
+后端：~~Flask~~ [Sanic](https://sanicframework.org/en/)
 
 **数据模型：`model/devices.json`**
 
@@ -52,7 +52,7 @@ HTTP 服务器：nginx
 ```bash
 sudo /etc/init.d/nginx start
 cd /home/pi/SmartHome
-gunicorn -w 4 -b 127.0.0.1:5000 index:app
+python3 -m sanic server.app --host=127.0.0.1 --port=9876 --workers=4
 ```
 
 3. 开机启动：
@@ -82,7 +82,7 @@ server {
         server_name _;
         # HERE CHANGED
         location / {
-                proxy_pass http://127.0.0.1:5000;
+                proxy_pass http://127.0.0.1:9876;
                 proxy_set_header Host $host;
                 proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
                 include /etc/nginx/mime.types;
