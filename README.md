@@ -4,7 +4,7 @@
 
 ## 框架
 
-前端：[React.js](https://reactjs.org/) + [Spectre.css](https://picturepan2.github.io/spectre/)
+前端：[React.js](https://reactjs.org/) + ~~[Spectre.css](https://picturepan2.github.io/spectre/)~~ [AntD](https://ant.design/components/overview-cn/)
 
 后端：~~Flask~~ [Sanic](https://sanicframework.org/en/)
 
