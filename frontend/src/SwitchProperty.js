@@ -8,7 +8,7 @@ export default function SwitchProperty(props) {
 
   return (
     <PropertyFrame name={props.name}>
-      <Row>
+      <Row align="middle" justify="center">
         <Col span={2}>
           <Button shape="circle" onClick={()=>{
             setValue(true);
@@ -17,7 +17,7 @@ export default function SwitchProperty(props) {
             {props.trueText}
           </Button>
         </Col>
-        <Col span={20}>
+        <Col span={20} style={{textAlign: "center"}}>
           {value ? props.trueText : props.falseText}
         </Col>
         <Col span={2}>

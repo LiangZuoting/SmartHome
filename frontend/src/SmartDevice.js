@@ -10,7 +10,6 @@ export default function SmartDevice(props) {
     const [visible, setVisible] = useState(true);
 
   function handleChange(pid, value) {
-      props.properties.find(p => p.id === pid).value = value;
       props.onChange(props.ip, pid, value);
   }
 
@@ -23,11 +22,10 @@ export default function SmartDevice(props) {
         props.scenes && <>
         {
             props.scenes.map((scene, index) => {
-                <Button key={index} type={currentScene === index ? "primary" : "default"} onClick={()=>{
+                return <Button key={index} type={currentScene === index ? "primary" : "default"} onClick={()=>{
                     setCurrentScene(index);
                     scene.properties.map((property) => {
-                        props.properties.find(p => p.id === property.id).value = property.value;
-                        handleChange(property);
+                        handleChange(property.id, property.value);
                     });
                 }}>
                     {scene.name}
