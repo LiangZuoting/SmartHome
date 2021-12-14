@@ -1,59 +1,34 @@
-import React from "react";
+import { Button, Col, Row } from "antd";
+import React, { useState, useEffect } from "react";
 import PropertyFrame from "./PropertyFrame";
+import 'antd/dist/antd.css';
 
-export default class SwitchPorperty extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { json: props.json };
-  }
-  render() {
-    return (
-      <PropertyFrame
-        name={this.state.json.name}
-        children={() => {
-          return (
-            <div className="columns">
-              <div
-                className="column col-auto
-"
-              >
-                <button
-                  className="btn s-circle btn-lg"
-                  onClick={() => {
-                    let json = this.state.json;
-                    json.value = true;
-                    this.setState({ json: json });
-                    this.props.onChange(this.state.json);
-                  }}
-                >
-                  {this.state.json.trueText}
-                </button>
-              </div>
-              <div className="column col-mx-auto flex-centered">
-                <span>
-                  {" "}
-                  {this.state.json.value
-                    ? this.state.json.trueText
-                    : this.state.json.falseText}{" "}
-                </span>
-              </div>
-              <div className="column col-auto">
-                <button
-                  className="btn s-circle btn-lg"
-                  onClick={() => {
-                    let json = this.state.json;
-                    json.value = false;
-                    this.setState({ json: json });
-                    this.props.onChange(this.state.json);
-                  }}
-                >
-                  {this.state.json.falseText}
-                </button>
-              </div>
-            </div>
-          );
-        }}
-      ></PropertyFrame>
-    );
-  }
+export default function SwitchProperty(props) {
+  const [value, setValue] = useState(props.value);
+
+  return (
+    <PropertyFrame name={props.name}>
+      <Row>
+        <Col span={2}>
+          <Button shape="circle" onClick={()=>{
+            setValue(true);
+            props.onChange(props.id, true);
+          }}>
+            {props.trueText}
+          </Button>
+        </Col>
+        <Col span={20}>
+          {value ? props.trueText : props.falseText}
+        </Col>
+        <Col span={2}>
+          <Button shape="circle" onClick={()=>{
+              setValue(false);
+              props.onChange(props.id, false);
+            }}>
+              {props.falseText}
+            </Button>
+        </Col>
+      </Row>
+    </PropertyFrame>
+  );
 }

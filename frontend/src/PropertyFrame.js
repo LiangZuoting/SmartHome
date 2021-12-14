@@ -1,14 +1,16 @@
 import React from "react";
+import { Row, Col } from "antd";
+import 'antd/dist/antd.css';
 
-export default class PropertyFrame extends React.Component {
-  render() {
-    return (
-      <div className="container m-2 p-2">
-        <div className="columns">
-          <div className="column col-1 flex-centered">{this.props.name}</div>
-          <div className="column">{this.props.children(this.props.json)}</div>
-        </div>
-      </div>
-    );
-  }
+export default function PropertyFrame(props) {
+  return (
+    <Row>
+      <Col span={2}>
+        {props.name}
+      </Col>
+      <Col span={22}>
+        {props.children}
+      </Col>
+      </Row>
+  )
 }

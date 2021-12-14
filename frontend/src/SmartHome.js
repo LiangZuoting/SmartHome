@@ -1,16 +1,27 @@
 import React from "react";
 import SmartDevice from "./SmartDevice";
-
+import 'antd/dist/antd.css';
 
 export default class SmartHome extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { json: null, index: 0 };
-        this.deviceRef = React.createRef();
+        this.state = { json: null, index: null };
+        this.onDeviceChange = this.onDeviceChange.bind(this);
     }
 
     componentDidMount() {
-        fetch("/model/init").then(response => response.json()).then(json => { this.setState({ json: json }) });
+        fetch("/model/init").then(response => response.json()).then(json => { 
+            this.setState({ json: json }) });
+    }
+
+    onDeviceChange(ip, pid, value) {
+        let device = this.state.json.devices.find(d => d.ip === ip);
+        let property = device.properties.find(p => p.id === pid);
+        property.ip = ip;
+        property.value = value;
+        fetch('/', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(property) });
+        // 模拟 fetch 返回一个新 json 对象
+        this.setState({json: {...this.state.json}});
     }
 
     render() {
@@ -115,11 +126,18 @@ export default class SmartHome extends React.Component {
                         书房
           </text>
                 </g>
-                {this.state.json === null ? "" : this.state.json.devices.map((device, index) => {
+                {this.state.json && this.state.json.devices.map((device, index) => {
                     return this.createDevice(device, index);
                 })}
                 </svg>
-                {this.state.json === null ? "" : <SmartDevice ref={this.deviceRef} json={this.state.json.devices[this.state.index]} />}
+                {this.state.json && this.state.index && 
+                <SmartDevice
+                name={this.state.json.devices[this.state.index].name}
+                ip={this.state.json.devices[this.state.index].ip} 
+                properties={this.state.json.devices[this.state.index].properties} 
+                scenes={this.state.json.devices[this.state.index].scenes}
+                onChange={this.onDeviceChange} 
+                afterHide={()=>{this.setState({index: null});}} />}
             </div>
         );
     }
@@ -127,8 +145,6 @@ export default class SmartHome extends React.Component {
     createDevice(device, index) {
         return <image xlinkHref={device.ui} key={index} x={device.x} y={device.y} width={device.width} height={device.height} pointerEvents="auto" onClick={() => {
             this.setState({ index: index });
-            this.deviceRef.current.update(device);
-            window.location.href = "#device-modal";
         }} />;
     }
 }

@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './custom.css';
 import SmartHome from './SmartHome';
+import 'antd/dist/antd.css';
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(

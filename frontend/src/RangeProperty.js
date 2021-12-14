@@ -1,34 +1,15 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { Slider } from "antd";
 import PropertyFrame from "./PropertyFrame";
+import 'antd/dist/antd.css';
 
-export default class RangeProperty extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { json: props.json };
-  }
+export default function RangeProperty(props) {
+  const [value, setValue] = useState(props.value);
 
-  render() {
-    return (
-      <PropertyFrame
-        name={this.state.json.name}
-        children={() => {
-          return (
-            <input
-              className="slider tooltip"
-              type="range"
-              min={this.state.json.min}
-              max={this.state.json.max}
-              value={this.state.json.value}
-              onChange={(e) => {
-                let json = this.state.json;
-                json.value = parseInt(e.target.value);
-                this.setState({ json: json });
-                this.props.onChange(this.state.json);
-              }}
-            />
-          );
-        }}
-      />
-    );
-  }
+  return <PropertyFrame name={props.name}>
+    <Slider min={Number(props.min)} max={Number(props.max)} defaultValue={props.value} onChange={(v)=>{
+      setValue(v);
+      props.onChange(props.id, v);
+    }}/>
+  </PropertyFrame>
 }
