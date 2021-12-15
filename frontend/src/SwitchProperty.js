@@ -18,7 +18,7 @@ export default function SwitchProperty(props) {
           </Button>
         </Col>
         <Col span={20} style={{textAlign: "center"}}>
-          {value ? props.trueText : props.falseText}
+          <b>{value ? props.trueText : props.falseText}</b>
         </Col>
         <Col span={2}>
           <Button shape="circle" onClick={()=>{

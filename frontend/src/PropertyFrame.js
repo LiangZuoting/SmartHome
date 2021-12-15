@@ -4,13 +4,17 @@ import 'antd/dist/antd.css';
 
 export default function PropertyFrame(props) {
   return (
-    <Row>
-      <Col span={2}>
-        {props.name}
-      </Col>
-      <Col span={22}>
-        {props.children}
-      </Col>
+    <>
+      <br />
+      <Row align="middle">
+        <Col span={2}>
+          <b style={{textAlign: "center"}}>{props.name}</b>
+        </Col>
+        <Col span={22}>
+          {props.children}
+        </Col>
       </Row>
+      <br />
+    </>
   )
 }

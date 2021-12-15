@@ -14,7 +14,7 @@ export default function SmartDevice(props) {
   }
 
   return (
-    <Modal visible={visible} title={props.name} centered={true} closable={true} afterClose={props.afterHide}
+    <Modal visible={visible} title={<h2>{props.name}</h2>} centered={true} closable={true} afterClose={props.afterHide}
     onCancel={()=>{
         setVisible(false);
     }}
