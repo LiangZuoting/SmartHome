@@ -31,24 +31,60 @@
       "height": 72
     },
     {
-      "name": "阳台平开门",
-      "protocol": "fake",
-      "ip": "192.168.4.4",
-      "ui": "/images/window3.svg",
-      "x": 135,
-      "y": 100,
-      "width": 50,
-      "height": 50
-    },
-    {
       "name": "客厅窗帘",
       "protocol": "fake",
       "ip": "192.168.4.5",
       "ui": "/images/curtain.svg",
       "x": 135,
-      "y": 210,
+      "y": 155,
       "width": 50,
-      "height": 50
+      "height": 50,
+      "properties": [
+        {
+          "name": "开关",
+          "type": "range",
+          "id": "2-4",
+          "siid": 2,
+          "piid": 4,
+          "value": 0,
+          "min": 0,
+          "max": 100
+        }
+      ],
+      "timers": [
+        {
+          "name": "开窗帘",
+          "description": "每天早上 8 点打开客厅窗帘",
+          "trigger_args": {
+            "trigger": "cron",
+            "hour": "8"
+          },
+          "properties":[
+            {
+              "id": "2-4",
+              "siid": 2,
+              "piid": 4,
+              "value": 100
+            }
+          ]
+        },
+        {
+          "name": "关窗帘",
+          "description": "每天晚上 6 点关闭客厅窗帘",
+          "trigger_args": {
+            "trigger": "cron",
+            "hour": "18"
+          },
+          "properties":[
+            {
+              "id": "2-4",
+              "siid": 2,
+              "piid": 4,
+              "value": 0
+            }
+          ]
+        }
+      ]
     },
     {
       "name": "餐厅吸顶灯",

@@ -19,8 +19,7 @@ export default function SmartDevice(props) {
         setVisible(false);
     }}
      footer={
-        props.scenes && <>
-        {
+        props.scenes === undefined ? null :
             props.scenes.map((scene, index) => {
                 return <Button key={index} type={currentScene === index ? "primary" : "default"} onClick={()=>{
                     setCurrentScene(index);
@@ -30,9 +29,7 @@ export default function SmartDevice(props) {
                 }}>
                     {scene.name}
                 </Button>
-            })
-        }
-        </>
+            }) 
     }>
         {
             props.properties && <>
