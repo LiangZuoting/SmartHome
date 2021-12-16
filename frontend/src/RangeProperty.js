@@ -5,11 +5,20 @@ import 'antd/dist/antd.css';
 
 export default function RangeProperty(props) {
   const [value, setValue] = useState(props.value);
+  const step = props.step || 1;
 
   return <PropertyFrame name={props.name}>
-    <Slider min={Number(props.min)} max={Number(props.max)} defaultValue={props.value} onChange={(v)=>{
-      setValue(v);
-      props.onChange(props.id, v);
-    }}/>
+    <Slider
+      tooltipVisible={true}
+      tooltipPlacement="bottom"
+      min={Number(props.min)} 
+      max={Number(props.max)} 
+      step={step}
+      defaultValue={props.value} 
+      onChange={(v)=>{
+        setValue(v);
+        props.onChange(props.id, v);
+      }}
+    />
   </PropertyFrame>
 }

@@ -14,7 +14,6 @@ export default function PropertyFrame(props) {
           {props.children}
         </Col>
       </Row>
-      <br />
     </>
   )
 }

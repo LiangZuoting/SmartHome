@@ -18,7 +18,94 @@
       "x": 162.5,
       "y": 12.5,
       "width": 96,
-      "height": 52
+      "height": 52,
+      "properties": [
+        {
+          "name": "开关",
+          "type": "bool",
+          "id": "2-1",
+          "siid": 2,
+          "piid": 1,
+          "value": false,
+          "trueText": "开",
+          "falseText": "关"
+        },
+        {
+          "name": "功能",
+          "type": "radio",
+          "id": "2-2",
+          "siid": 2,
+          "piid": 2,
+          "values": [
+            {
+              "value": 2,
+              "name": "制冷"
+            },
+            {
+              "value": 3,
+              "name": "干燥"
+            },
+            {
+              "value": 4,
+              "name": "风扇"
+            },
+            {
+              "value": 5,
+              "name": "加热"
+            }
+          ]
+        },
+        {
+          "name": "温度",
+          "type": "range+",
+          "id": "2-4",
+          "siid": 2,
+          "piid": 4,
+          "min": 16,
+          "max": 31,
+          "step": 0.5
+        },
+        {
+          "name": "湿度",
+          "type": "range",
+          "id": "2-14",
+          "siid": 2,
+          "piid": 14,
+          "min": 0,
+          "max": 100,
+          "step": 1
+        },
+        {
+          "name": "ECO",
+          "type":"bool",
+          "id": "2-7",
+          "siid": 2,
+          "piid": 7,
+          "value": false,
+          "trueText":"开",
+          "falseText":"关"
+        },
+        {
+          "name": "睡眠",
+          "type":"bool",
+          "id": "2-11",
+          "siid": 2,
+          "piid": 11,
+          "value": false,
+          "trueText":"开",
+          "falseText":"关"
+        },
+        {
+          "name": "防直吹",
+          "type":"bool",
+          "id": "2-15",
+          "siid": 2,
+          "piid": 15,
+          "value": false,
+          "trueText":"开",
+          "falseText":"关"
+        }
+      ]
     },
     {
       "name": "门口监控",

@@ -4,6 +4,8 @@ import ColorProperty from "./ColorProperty";
 import RangeProperty from "./RangeProperty";
 import SwitchPorperty from "./SwitchProperty";
 import 'antd/dist/antd.css';
+import RadioProperty from "./RadioProperty";
+import RangePlusProperty from "./RangePlusProperty";
 
 export default function SmartDevice(props) {
     const [currentScene, setCurrentScene] = useState(null);
@@ -70,6 +72,30 @@ export default function SmartDevice(props) {
                                         onChange={handleChange}
                                     />
                                 );
+                            case "radio":
+                                return (
+                                    <RadioProperty
+                                        key={index}
+                                        value={property.value}
+                                        id={property.id}
+                                        name={property.name}
+                                        values={property.values}
+                                        onChange={handleChange}
+                                    />
+                                    );
+                            case "range+":
+                                return (
+                                    <RangePlusProperty
+                                        key={index}
+                                        value={property.value}
+                                        id={property.id}
+                                        name={property.name}
+                                        min={property.min}
+                                        max={property.max}
+                                        step={property.step}
+                                        onChange={handleChange}
+                                    />
+                                )
                             default:
                                 return property.name;
                         }
