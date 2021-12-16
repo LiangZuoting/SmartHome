@@ -76,6 +76,16 @@
           "step": 1
         },
         {
+          "name": "摆风",
+          "type":"bool",
+          "id": "3-4",
+          "siid": 3,
+          "piid": 4,
+          "value": false,
+          "trueText":"开",
+          "falseText":"关"
+        },
+        {
           "name": "ECO",
           "type":"bool",
           "id": "2-7",
@@ -101,6 +111,16 @@
           "id": "2-15",
           "siid": 2,
           "piid": 15,
+          "value": false,
+          "trueText":"开",
+          "falseText":"关"
+        },
+        {
+          "name": "指示灯",
+          "type":"bool",
+          "id": "6-1",
+          "siid": 6,
+          "piid": 1,
           "value": false,
           "trueText":"开",
           "falseText":"关"

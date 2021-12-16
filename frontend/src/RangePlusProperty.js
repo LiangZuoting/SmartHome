@@ -1,4 +1,5 @@
 import { Button, Col, Row, Slider } from "antd";
+import { MinusOutlined, PlusOutlined } from "@ant-design/icons";
 import React, {useState} from "react";
 import PropertyFrame from "./PropertyFrame";
 
@@ -22,9 +23,10 @@ export default function RangePlusProperty(props) {
         <PropertyFrame name={props.name}>
             <Row>
                 <Col span={2}>
-                    <Button disabled={value <= props.min} onClick={handleSubClick}>
-                        -
-                    </Button>
+                    <Button 
+                        disabled={value <= props.min} 
+                        icon={<MinusOutlined />}
+                        onClick={handleSubClick}/>
                 </Col>
                 <Col span={20}>
                     <Slider
@@ -43,9 +45,10 @@ export default function RangePlusProperty(props) {
                     />
                 </Col>
                 <Col span={2}>
-                    <Button disabled={value >= props.max} onClick={handleAddClick}>
-                        +
-                    </Button>
+                    <Button 
+                        icon={<PlusOutlined />}
+                        disabled={value >= props.max} 
+                        onClick={handleAddClick} />
                 </Col>
             </Row>
         </PropertyFrame>
