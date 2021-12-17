@@ -4,15 +4,22 @@ import PropertyFrame from "./PropertyFrame";
 export default function RadioProperty(props) {
     return (
         <PropertyFrame name={props.name}>
-            <Radio.Group value={props.value} onChange={(e)=>{
-                props.onChange(props.id, e.target.value);
-            }}>
+            <Radio.Group
+                style={{width: "100%"}} 
+                buttonStyle="solid"
+                value={props.value} 
+                onChange={(e)=>{
+                    props.onChange(props.id, e.target.value);
+                    }}
+            >
                 {
                     props.values.map((v, index) => {
                         return (
-                            <Radio key={index} value={v.value}>
+                            <Radio.Button 
+                                style={{width: `${100/props.values.length}%`, textAlign: "center"}}
+                                key={index} value={v.value}>
                                     {v.name}
-                                </Radio>
+                            </Radio.Button>
                         )
                     })
                 }
