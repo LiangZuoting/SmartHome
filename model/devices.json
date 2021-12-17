@@ -191,6 +191,68 @@
             }
           ]
         }
+      ],
+      "scenes": [
+        {
+          "name": "全关",
+          "descrition": "把窗帘全拉上",
+          "properties": [
+            {
+              "id": "2-4",
+              "siid": 2,
+              "piid": 4,
+              "value": 0
+            }
+          ]
+        },
+        {
+          "name": "全开",
+          "descrition": "把窗帘全打开",
+          "properties": [
+            {
+              "id": "2-4",
+              "siid": 2,
+              "piid": 4,
+              "value": 100
+            }
+          ]
+        },
+        {
+          "name": "1/3",
+          "descrition": "把窗帘打开到 1/3 位置",
+          "properties": [
+            {
+              "id": "2-4",
+              "siid": 2,
+              "piid": 4,
+              "value": 33
+            }
+          ]
+        },
+        {
+          "name": "1/2",
+          "descrition": "把窗帘打开到 1/2 位置",
+          "properties": [
+            {
+              "id": "2-4",
+              "siid": 2,
+              "piid": 4,
+              "value": 50
+            }
+          ]
+        },
+        {
+          "name": "2/3",
+          "descrition": "把窗帘打开到 2/3 位置",
+          "properties": [
+            {
+              "id": "2-4",
+              "siid": 2,
+              "piid": 4,
+              "value": 67
+            }
+          ]
+        }
       ]
     },
     {
@@ -281,7 +343,99 @@
       "x": 135,
       "y": 780,
       "width": 50,
-      "height": 50
+      "height": 50,
+      "properties": [
+        {
+          "name": "开关",
+          "type": "range",
+          "id": "2-4",
+          "siid": 2,
+          "piid": 4,
+          "value": 0,
+          "min": 0,
+          "max": 100
+        }
+      ],
+      "timers": [
+        {
+          "name": "关窗帘",
+          "description": "每天晚上 6 点关闭主卧窗帘",
+          "trigger_args": {
+            "trigger": "cron",
+            "hour": "18"
+          },
+          "properties":[
+            {
+              "id": "2-4",
+              "siid": 2,
+              "piid": 4,
+              "value": 0
+            }
+          ]
+        }
+      ],
+      "scenes": [
+        {
+          "name": "全关",
+          "descrition": "把窗帘全拉上",
+          "properties": [
+            {
+              "id": "2-4",
+              "siid": 2,
+              "piid": 4,
+              "value": 0
+            }
+          ]
+        },
+        {
+          "name": "全开",
+          "descrition": "把窗帘全打开",
+          "properties": [
+            {
+              "id": "2-4",
+              "siid": 2,
+              "piid": 4,
+              "value": 100
+            }
+          ]
+        },
+        {
+          "name": "1/3",
+          "descrition": "把窗帘打开到 1/3 位置",
+          "properties": [
+            {
+              "id": "2-4",
+              "siid": 2,
+              "piid": 4,
+              "value": 33
+            }
+          ]
+        },
+        {
+          "name": "1/2",
+          "descrition": "把窗帘打开到 1/2 位置",
+          "properties": [
+            {
+              "id": "2-4",
+              "siid": 2,
+              "piid": 4,
+              "value": 50
+            }
+          ]
+        },
+        {
+          "name": "2/3",
+          "descrition": "把窗帘打开到 2/3 位置",
+          "properties": [
+            {
+              "id": "2-4",
+              "siid": 2,
+              "piid": 4,
+              "value": 67
+            }
+          ]
+        }
+      ]
     },
     {
       "name": "书房空调",
