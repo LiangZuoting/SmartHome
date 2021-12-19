@@ -14,7 +14,7 @@ export default function RangeProperty(props) {
       min={Number(props.min)} 
       max={Number(props.max)} 
       step={step}
-      defaultValue={props.value} 
+      value={props.value} 
       onAfterChange={(v)=>{
         setValue(v);
         props.onChange(props.id, v);

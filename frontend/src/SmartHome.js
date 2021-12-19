@@ -19,9 +19,11 @@ export default class SmartHome extends React.Component {
         let property = device.properties.find(p => p.id === pid);
         property.ip = ip;
         property.value = value;
-        fetch('/', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(property) });
-        // 模拟 fetch 返回一个新 json 对象
-        this.setState({json: {...this.state.json}});
+        fetch('/', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(property) })
+        .then(response => response.json())
+        .then(data => {
+            this.setState({json: data});
+        });
     }
 
     render() {

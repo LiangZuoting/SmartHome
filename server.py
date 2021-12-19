@@ -90,12 +90,15 @@ async def update(request):
 					sched.add_job(scheduler_job, args=(ip, data['protocol'], [data]), trigger='interval', minutes=2, id=ip)
 		else:
 			dev.set_property_by(data['siid'], data['piid'], data['value'])
-	return json(data)
+	return json(updateAllDevices())
 		
 
 @app.get('/model/init')
-async def init(request):	
-	# get latest status of devices each request
+async def init(request):
+	return json(updateAllDevices())
+
+
+def updateAllDevices():
 	try:
 		for dev in dev_model['devices']:
 			if dev['ip'] in miot_devs:
@@ -105,8 +108,7 @@ async def init(request):
 		logging.info(f'init: {dev_model}')
 	except DeviceException as error:
 		logging.error(format(error))
-
-	return json(dev_model)
+	return dev_model
 
 
 if __name__ == '__main__':
