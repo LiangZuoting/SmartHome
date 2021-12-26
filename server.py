@@ -6,6 +6,7 @@ from sanic import Sanic
 from sanic.response import json
 from sanic.response import file
 import ujson
+from msmart.device import air_conditioning_device as MideaAC
 
 DEBUG = True
 
@@ -66,18 +67,30 @@ def scheduler_job(ip, protocol, properties):
 	if protocol == 'miot':
 		for p in properties:
 			miot_devs[ip].set_property_by(p['siid'], p['piid'], p['value'])
+	elif protocol == 'midea':
+		for p in properties:
+			setattr(midea_acs[ip], p['id'], p['value'])
+		midea_acs[ip].apply()
 
 
 # connecting to devices when boot
 dev_model = ujson.loads(open(os.path.join('./model', 'devices.json')).read())
 # map from ip to device object
 miot_devs = {}
+midea_acs = {}
 for dev in dev_model['devices']:
-	if dev['protocol'] == 'miot':
+	protocol = dev['protocol']
+	if protocol == 'miot':
 		miot_devs[dev['ip']] = MiotDevice(dev['ip'], dev['token'], lazy_discover=False)
-		if 'timers' in dev:
-			for t in dev['timers']:
-				sched.add_job(scheduler_job, args=(dev['ip'], dev['protocol'], t['properties']), **t['trigger_args'])
+	elif protocol == 'midea':
+		ac = MideaAC(dev['ip'], int(dev['id']), dev['port'])
+		midea_acs[dev['ip']] = ac
+		ac.authenticate(dev['key'], dev['token'])
+	else:
+		continue
+	if 'timers' in dev:
+		for t in dev['timers']:
+			sched.add_job(scheduler_job, args=(dev['ip'], dev['protocol'], t['properties']), **t['trigger_args'])
 			
 
 # start scheduler
@@ -93,7 +106,7 @@ async def index(request):
 async def update(request):
 	data = request.json
 	ip = data['ip']
-	if (ip in miot_devs):
+	if ip in miot_devs:
 		dev = miot_devs[ip]
 		# post from ipc
 		# it should only be SWITCH property posted.
@@ -110,6 +123,10 @@ async def update(request):
 					sched.add_job(scheduler_job, args=(ip, data['protocol'], [data]), trigger='interval', minutes=2, id=ip)
 		else:
 			dev.set_property_by(data['siid'], data['piid'], data['value'])
+	elif ip in midea_acs:
+		dev = midea_acs[ip]
+		setattr(dev, data['id'], data['value'])
+		dev.apply()
 	return json(updateAllDevices())
 		
 
@@ -125,6 +142,10 @@ def updateAllDevices():
 				for prop in dev['properties']:
 					ret = miot_devs[dev['ip']].get_property_by(prop['siid'], prop['piid']) # ret is a json array
 					prop['value'] = ret[0]['value']
+			elif dev['ip'] in midea_acs:
+				midea_acs[dev['ip']].refresh()
+				for prop in dev['properties']:
+					getattr(midea_acs[dev['ip']], prop['id'])
 		info(f'init: {dev_model}')
 	except DeviceException as error:
 		error(format(error))

@@ -478,13 +478,27 @@
     },
     {
       "name": "书房空调",
-      "protocol": "gree",
-      "ip": "192.168.4.12",
+      "protocol": "midea",
+      "ip": "192.168.3.75",
+	  "id": 183618442209011,
+	  "port": 6444,
+	  "token": "6738B1DBF25B882D92ACC50C672C85D8368F56350328222EC486E77A9F59BA3797B7EBCC916C0786F8876AD32E4C3C8D7386A460B811803EEC24B217518C8E4A",
+	  "key": "94CBD93A5B2B4890B2E563DDF9E806FB68726BF62359495F8D20951AF19DF210",
       "ui": "/images/ac-bottom.svg",
       "x": 622.5,
       "y": 705.5,
       "width": 96,
-      "height": 52
+      "height": 52,
+	  "properties": [
+	    {
+		  "name": "开关",
+		  "type": "bool",
+		  "id": "power_state",
+		  "value": false,
+		  "trueText": "开",
+          "falseText": "关"
+		}
+	  ]
     },
     {
       "name": "阳台灯带",
