@@ -1,5 +1,6 @@
 #!usr/bin/env python3
 import os
+from enum import Enum
 from miio import MiotDevice, DeviceException
 from apscheduler.schedulers.background import BackgroundScheduler
 from sanic import Sanic
@@ -69,7 +70,10 @@ def scheduler_job(ip, protocol, properties):
 			miot_devs[ip].set_property_by(p['siid'], p['piid'], p['value'])
 	elif protocol == 'midea':
 		for p in properties:
-			setattr(midea_acs[ip], p['id'], p['value'])
+			# convert int values of json file to its orginal type in msmart,
+			# with getattr we can know type msmart wanted.
+			# e.g. fan_speed whose getter returns fan_speed_enum and setter accepts fan_speed_enum only.
+			setattr(midea_acs[ip], p['id'], type(getattr(midea_acs[ip], p['id']))(p['value']))
 		midea_acs[ip].apply()
 
 
@@ -125,7 +129,7 @@ async def update(request):
 			dev.set_property_by(data['siid'], data['piid'], data['value'])
 	elif ip in midea_acs:
 		dev = midea_acs[ip]
-		setattr(dev, data['id'], data['value'])
+		setattr(dev, data['id'], type(getattr(dev, data['id']))(data['value']))
 		dev.apply()
 	return json(updateAllDevices())
 		
@@ -145,7 +149,10 @@ def updateAllDevices():
 			elif dev['ip'] in midea_acs:
 				midea_acs[dev['ip']].refresh()
 				for prop in dev['properties']:
-					getattr(midea_acs[dev['ip']], prop['id'])
+					v = getattr(midea_acs[dev['ip']], prop['id'])
+					if isinstance(v, Enum):
+						v = v.value
+					prop['value'] = v
 		info(f'init: {dev_model}')
 	except DeviceException as error:
 		error(format(error))

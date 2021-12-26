@@ -331,13 +331,136 @@
     },
     {
       "name": "次卧空调",
-      "protocol": "gree",
-      "ip": "192.168.4.10",
+      "protocol": "midea",
+      "ip": "192.168.3.77",
+	  "id": 181419418952618,
+	  "port": 6444,
+	  "token": "61803F1CC52EA73347477128AE8167FAB252894BB3D5D6CA2C82EC3FCBA435169280937FFB05239549E58DEB09B5EEE17536B10492E47E2A60C3421DFC614473",
+	  "key": "A3AB8FE3608949C9809E0928994680066213FD7DC10641E6961D0B098D002A41",
       "ui": "/images/ac-left.svg",
       "x": 162.5,
       "y": 541.5,
       "width": 52,
-      "height": 96
+      "height": 96,
+	  "properties": [
+	    {
+		  "name": "开关",
+		  "type": "bool",
+		  "id": "power_state",
+		  "value": false,
+		  "trueText": "开",
+          "falseText": "关"
+		},
+		{
+		  "name": "温度",
+          "type": "range+",
+          "id": "target_temperature",
+          "min": 16,
+          "max": 31,
+          "step": 0.5,
+		  "marks": {
+		    "16": "16°C",
+			"26": "26°C",
+			"31": "31°C"
+		  }
+		},
+		{
+          "name": "功能",
+          "type": "radio",
+          "id": "operational_mode",
+          "values": [
+		    {
+              "value": 1,
+              "name": "自动"
+            },
+            {
+              "value": 2,
+              "name": "制冷"
+            },
+            {
+              "value": 3,
+              "name": "干燥"
+            },
+            {
+              "value": 4,
+              "name": "加热"
+            },
+            {
+              "value": 5,
+              "name": "风扇"
+            }
+          ]
+        },
+		{
+          "name": "风速",
+          "type": "radio",
+          "id": "fan_speed",
+          "values": [
+		    {
+              "value": 102,
+              "name": "自动"
+            },
+            {
+              "value": 100,
+              "name": "全速"
+            },
+            {
+              "value": 80,
+              "name": "高速"
+            },
+            {
+              "value": 60,
+              "name": "中速"
+            },
+            {
+              "value": 40,
+              "name": "低速"
+            },
+            {
+              "value": 20,
+              "name": "静速"
+            }
+          ]
+        },
+		{
+          "name": "摆风",
+          "type": "radio",
+          "id": "swing_mode",
+          "values": [
+		    {
+              "value": 0,
+              "name": "关"
+            },
+            {
+              "value": 3,
+              "name": "左右"
+            },
+            {
+              "value": 12,
+              "name": "上下"
+            },
+            {
+              "value": 15,
+              "name": "上下左右"
+            }
+          ]
+        },
+        {
+          "name": "ECO",
+          "type":"bool",
+          "id": "eco_mode",
+          "value": false,
+          "trueText":"开",
+          "falseText":"关"
+        },
+		{
+		  "name": "室温",
+		  "type": "text",
+		  "id": "indoor_temperature",
+		  "value": "0℃",
+		  "readonly": true
+		}
+	  ]
     },
     {
       "name": "次卧吸顶灯",
@@ -361,13 +484,136 @@
     },
     {
       "name": "主卧空调",
-      "protocol": "gree",
-      "ip": "192.168.4.11",
+      "protocol": "midea",
+      "ip": "192.168.3.76",
+	  "id": 196812581433254,
+	  "port": 6444,
+	  "token": "7DD98894AB6E839AFB0A5FCE3AED44CCD02E93BBAC25E4373FA42D0B33734FE728B0D84CC5F36DC21C16B3B5542F9A3C5EB8777DC9439CA720E9E572E639D68D",
+	  "key": "0265F1E0A2C54913B16AB06C010CBE41D03325769BB14839A887C74737EBCA42",
       "ui": "/images/ac-left.svg",
       "x": 162.5,
       "y": 642.5,
       "width": 52,
-      "height": 96
+      "height": 96,
+	  "properties": [
+	    {
+		  "name": "开关",
+		  "type": "bool",
+		  "id": "power_state",
+		  "value": false,
+		  "trueText": "开",
+          "falseText": "关"
+		},
+		{
+		  "name": "温度",
+          "type": "range+",
+          "id": "target_temperature",
+          "min": 16,
+          "max": 31,
+          "step": 0.5,
+		  "marks": {
+		    "16": "16°C",
+			"26": "26°C",
+			"31": "31°C"
+		  }
+		},
+		{
+          "name": "功能",
+          "type": "radio",
+          "id": "operational_mode",
+          "values": [
+		    {
+              "value": 1,
+              "name": "自动"
+            },
+            {
+              "value": 2,
+              "name": "制冷"
+            },
+            {
+              "value": 3,
+              "name": "干燥"
+            },
+            {
+              "value": 4,
+              "name": "加热"
+            },
+            {
+              "value": 5,
+              "name": "风扇"
+            }
+          ]
+        },
+		{
+          "name": "风速",
+          "type": "radio",
+          "id": "fan_speed",
+          "values": [
+		    {
+              "value": 102,
+              "name": "自动"
+            },
+            {
+              "value": 100,
+              "name": "全速"
+            },
+            {
+              "value": 80,
+              "name": "高速"
+            },
+            {
+              "value": 60,
+              "name": "中速"
+            },
+            {
+              "value": 40,
+              "name": "低速"
+            },
+            {
+              "value": 20,
+              "name": "静速"
+            }
+          ]
+        },
+		{
+          "name": "摆风",
+          "type": "radio",
+          "id": "swing_mode",
+          "values": [
+		    {
+              "value": 0,
+              "name": "关"
+            },
+            {
+              "value": 3,
+              "name": "左右"
+            },
+            {
+              "value": 12,
+              "name": "上下"
+            },
+            {
+              "value": 15,
+              "name": "上下左右"
+            }
+          ]
+        },
+        {
+          "name": "ECO",
+          "type":"bool",
+          "id": "eco_mode",
+          "value": false,
+          "trueText":"开",
+          "falseText":"关"
+        },
+		{
+		  "name": "室温",
+		  "type": "text",
+		  "id": "indoor_temperature",
+		  "value": "0℃",
+		  "readonly": true
+		}
+	  ]
     },
     {
       "name": "主卧窗帘",
@@ -497,6 +743,115 @@
 		  "value": false,
 		  "trueText": "开",
           "falseText": "关"
+		},
+		{
+		  "name": "温度",
+          "type": "range+",
+          "id": "target_temperature",
+          "min": 16,
+          "max": 31,
+          "step": 0.5,
+		  "marks": {
+		    "16": "16°C",
+			"26": "26°C",
+			"31": "31°C"
+		  }
+		},
+		{
+          "name": "功能",
+          "type": "radio",
+          "id": "operational_mode",
+          "values": [
+		    {
+              "value": 1,
+              "name": "自动"
+            },
+            {
+              "value": 2,
+              "name": "制冷"
+            },
+            {
+              "value": 3,
+              "name": "干燥"
+            },
+            {
+              "value": 4,
+              "name": "加热"
+            },
+            {
+              "value": 5,
+              "name": "风扇"
+            }
+          ]
+        },
+		{
+          "name": "风速",
+          "type": "radio",
+          "id": "fan_speed",
+          "values": [
+		    {
+              "value": 102,
+              "name": "自动"
+            },
+            {
+              "value": 100,
+              "name": "全速"
+            },
+            {
+              "value": 80,
+              "name": "高速"
+            },
+            {
+              "value": 60,
+              "name": "中速"
+            },
+            {
+              "value": 40,
+              "name": "低速"
+            },
+            {
+              "value": 20,
+              "name": "静速"
+            }
+          ]
+        },
+		{
+          "name": "摆风",
+          "type": "radio",
+          "id": "swing_mode",
+          "values": [
+		    {
+              "value": 0,
+              "name": "关"
+            },
+            {
+              "value": 3,
+              "name": "左右"
+            },
+            {
+              "value": 12,
+              "name": "上下"
+            },
+            {
+              "value": 15,
+              "name": "上下左右"
+            }
+          ]
+        },
+        {
+          "name": "ECO",
+          "type":"bool",
+          "id": "eco_mode",
+          "value": false,
+          "trueText":"开",
+          "falseText":"关"
+        },
+		{
+		  "name": "室温",
+		  "type": "text",
+		  "id": "indoor_temperature",
+		  "value": "0℃",
+		  "readonly": true
 		}
 	  ]
     },
