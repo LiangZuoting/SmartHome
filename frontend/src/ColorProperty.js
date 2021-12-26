@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Input } from "antd";
 import PropertyFrame from "./PropertyFrame";
 import 'antd/dist/antd.css';
 
-export default function (props) {
+export default function ColorProperty(props) {
   const [value, setValue] = useState(props.value);
 
   return (

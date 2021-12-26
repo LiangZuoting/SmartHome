@@ -2,37 +2,57 @@
 import os
 from miio import MiotDevice, DeviceException
 from apscheduler.schedulers.background import BackgroundScheduler
-import logging
-from logging.config import dictConfig
-from logging.handlers import RotatingFileHandler
 from sanic import Sanic
 from sanic.response import json
 from sanic.response import file
 import ujson
 
+DEBUG = True
 
-if not os.path.exists('logs'):
-	os.mkdir('logs')
-dictConfig({
-    'version': 1,
-    'formatters': {'default': {
-        'format': '[%(asctime)s] %(levelname)s in %(module)s: %(message)s',
-    }},
-    'handlers': {'file': {
-        'class': 'logging.handlers.RotatingFileHandler',
-		'filename': 'logs/sanic.log',
-		'maxBytes': 4096000,
-		'backupCount': 10,
-        'formatter': 'default'
-    }},
-    'root': {
-        'level': 'INFO',
-        'handlers': ['file']
-    }
-})
+if DEBUG:
+	from sanic.log import logger
+else:
+	import logging
+	from logging.config import dictConfig
+	from logging.handlers import RotatingFileHandler
+
+	if not os.path.exists('logs'):
+		os.mkdir('logs')
+	dictConfig({
+		'version': 1,
+		'formatters': {'default': {
+			'format': '[%(asctime)s] %(levelname)s in %(module)s: %(message)s',
+		}},
+		'handlers': {'file': {
+			'class': 'logging.handlers.RotatingFileHandler',
+			'filename': 'logs/sanic.log',
+			'maxBytes': 4096000,
+			'backupCount': 10,
+			'formatter': 'default'
+		}},
+		'root': {
+			'level': 'INFO',
+			'handlers': ['file']
+		}
+	})
+
+
+def info(msg):
+	if DEBUG:
+		logger.info(msg)
+	else:
+		logging.info(msg)
+
+
+def error(msg):
+	if DEBUG:
+		logger.error(msg)
+	else:
+		logging.error(msg)
+
 
 app = Sanic(__name__)
-logging.info('sanic started...')
+info('sanic started...')
 app.static('/static', './static')
 app.static('/manifest.json', './manifest.json')
 app.static('/favicon.ico', './favicon.ico')
@@ -105,9 +125,9 @@ def updateAllDevices():
 				for prop in dev['properties']:
 					ret = miot_devs[dev['ip']].get_property_by(prop['siid'], prop['piid']) # ret is a json array
 					prop['value'] = ret[0]['value']
-		logging.info(f'init: {dev_model}')
+		info(f'init: {dev_model}')
 	except DeviceException as error:
-		logging.error(format(error))
+		error(format(error))
 	return dev_model
 
 

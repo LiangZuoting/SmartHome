@@ -6,6 +6,7 @@ import SwitchPorperty from "./SwitchProperty";
 import 'antd/dist/antd.css';
 import RadioProperty from "./RadioProperty";
 import RangePlusProperty from "./RangePlusProperty";
+import TextProperty from "./TextProperty";
 
 export default function SmartDevice(props) {
     const [currentScene, setCurrentScene] = useState(null);
@@ -25,7 +26,7 @@ export default function SmartDevice(props) {
             props.scenes.map((scene, index) => {
                 return <Button key={index} type={currentScene === index ? "primary" : "default"} onClick={()=>{
                     setCurrentScene(index);
-                    scene.properties.map((property) => {
+                    scene.properties.forEach((property) => {
                         handleChange(property.id, property.value);
                     });
                 }}>
@@ -59,6 +60,7 @@ export default function SmartDevice(props) {
                                         name={property.name}
                                         min={property.min}
                                         max={property.max}
+                                        marks={property.marks}
                                         onChange={handleChange}
                                     />
                                 );
@@ -92,10 +94,19 @@ export default function SmartDevice(props) {
                                         name={property.name}
                                         min={property.min}
                                         max={property.max}
+                                        marks={property.marks}
                                         step={property.step}
                                         onChange={handleChange}
                                     />
-                                )
+                                );
+                            case "text":
+                                return (
+                                    <TextProperty 
+                                        key={index} 
+                                        value={property.value} 
+                                        name={property.name} 
+                                    />
+                                );
                             default:
                                 return property.name;
                         }

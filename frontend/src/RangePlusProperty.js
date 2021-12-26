@@ -30,12 +30,12 @@ export default function RangePlusProperty(props) {
                 </Col>
                 <Col span={20}>
                     <Slider
-                        tooltipVisible={true}
-                        tooltipPlacement="bottom" 
+                        tooltipVisible={false}
                         min={props.min} 
                         max={props.max} 
+                        marks={props.marks ? props.marks : null}
                         step={step} 
-                        value={value} 
+                        defaultValue={props.value} 
                         onAfterChange={
                             (v) => {
                                 setValue(v);

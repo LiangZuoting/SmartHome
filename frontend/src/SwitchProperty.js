@@ -1,5 +1,5 @@
 import { Button, Col, Row } from "antd";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import PropertyFrame from "./PropertyFrame";
 import 'antd/dist/antd.css';
 
