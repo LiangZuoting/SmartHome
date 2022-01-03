@@ -18,11 +18,16 @@
 
 + `properties`：可调节的设备参数集。`"name": "开关"` 是预置属性，关联设备的开关状态。通常所有设备都应该有且唯一，可以通过查询 `name` 获取设备是否正在运行。
 
++ `timers`：定时任务。内含一组 `properties` 子集，达到设定时间时批量应用设备参数新值。定时器规则描述完全遵从 APScheduler 参数，从而可以解包后直接透传到 APScheduler 接口。
+
++ `scenes`：预设场景。同样用作批量应用一组设备参数的新值。
+
 + 设备参数描述属性：根据不同设备能力各自不同，但格式统一：必须是 `properties` 数组下的一个对象；必须有 `id` 和 `value` 两个固定属性。`id` 要求全局唯一；`value` 标识设备参数当前值。
 
 其它主要依赖：
 
 + [python-miio](https://pypi.org/project/python-miio/)，[小米Iot 设备协议规范](https://iot.mi.com/new/doc/design/spec/overall) 的 Python 实现。
++ [midea-msmart](https://github.com/mac-zhou/midea-msmart)，社区实现的美的空调控制协议的 Python 实现。
 + [APScheduler](https://github.com/agronholm/apscheduler)，时间调度，用来完成定时控制。
 
 ## UI、UX 设计
@@ -92,6 +97,9 @@ server {
 
 ## 设备
 
-> 下半年搬了新家再更新
+> ~~下半年搬了新家再更新~~
 
 + [Nanoleaf 灯带](https://detail.tmall.com/item.htm?spm=a1z10.5-b-s.w4011-23338211014.47.443055f28ALXh9&id=633986326481&rn=ad8c40aabbb71b7c7dce05c0a2c54c59&abbucket=12&sku_properties=13381687:10122;122276201:10122)。可调节亮度、颜色、色温。
++ [小米空调](https://detail.tmall.com/item.htm?id=641086203155&spm=a1z09.2.0.0.791a2e8d6AeEvp&_u=rotdgsn6a13&skuId=4602713733084)
++ [美的空调](https://detail.tmall.com/item.htm?spm=a220o.1000855.1000983.1.222a367cjYyr4N&id=621252234232&standard=1)
++ [Aqara A1 窗帘电机](https://detail.tmall.com/item.htm?id=617317348784&spm=a1z09.2.0.0.791a2e8d6AeEvp&_u=rotdgsn33f1)
