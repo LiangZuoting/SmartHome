@@ -103,3 +103,7 @@ server {
 + [小米空调](https://detail.tmall.com/item.htm?id=641086203155&spm=a1z09.2.0.0.791a2e8d6AeEvp&_u=rotdgsn6a13&skuId=4602713733084)
 + [美的空调](https://detail.tmall.com/item.htm?spm=a220o.1000855.1000983.1.222a367cjYyr4N&id=621252234232&standard=1)
 + [Aqara A1 窗帘电机](https://detail.tmall.com/item.htm?id=617317348784&spm=a1z09.2.0.0.791a2e8d6AeEvp&_u=rotdgsn33f1)
+
+## 问题
+
+1. 美的空调在断电重连时会重新分配 token 和 key。应该将 midea-discover 设备发现功能集成到 msmart。
