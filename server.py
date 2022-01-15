@@ -84,9 +84,9 @@ app.static('/images', './images')
 sched = BackgroundScheduler()
 
 
-dev_model = {} # devices' config, key is ip address
-miot_devs = {} # miot devices' connection, key is ip address
-midea_acs = {} # midea devices' connection, key is ip address
+dev_model = {}  # devices' config, key is ip address
+miot_devs = {}  # miot devices' connection, key is ip address
+midea_acs = {}  # midea devices' connection, key is ip address
 # load all devices config when boot
 devices_dir = './model/devices'
 for filename in os.listdir(devices_dir):
@@ -223,7 +223,7 @@ async def get_devices(request):
     return json(dev_model)
 
 
-@app.get('/device/<ip:path>')
+@app.get('/device/<ip:path>')  # ip address is a path but not a str
 async def get_device(request, ip: str):
     return json(refresh_device(ip))
 
