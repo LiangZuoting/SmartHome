@@ -5,6 +5,7 @@ import 'antd/dist/antd.css';
 
 export default function RangeProperty(props) {
   const [step, setStep] = useState(props.step || 1);
+  const [value, setValue] = useState(props.value);
 
   return <PropertyFrame name={props.name}>
     <Slider
@@ -13,8 +14,10 @@ export default function RangeProperty(props) {
       max={Number(props.max)} 
       marks={props.marks ? props.marks : null}
       step={step}
-      defaultValue={props.value} 
+      value={props.value}
       onAfterChange={(v)=>{
+        console.log(`onAfterChange ${v}`);
+        setValue(v);
         props.onChange(props.id, v);
       }}
     />

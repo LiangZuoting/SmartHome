@@ -2,6 +2,13 @@
 
 自用智能家居控制系统。简化、模仿 [Home Assistant](https://www.home-assistant.io/) 的拙作，但核心诉求是一致的：本地化部署、保护隐私。
 
+## ChangeLog
+
+2022.01.15:
+
+1. 拆分设备描述文件，每一个设备单独一个 json 文件；
+2. 首页启动时不再获取全部设备最新状态，延迟到用户浏览具体设备时更新。
+
 ## 框架
 
 前端：[React.js](https://reactjs.org/) + ~~[Spectre.css](https://picturepan2.github.io/spectre/)~~ [AntD](https://ant.design/components/overview-cn/)

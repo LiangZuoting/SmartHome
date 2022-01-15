@@ -1,0 +1,123 @@
+{
+    "name": "客厅窗帘",
+    "protocol": "miot",
+    "ip": "192.168.3.83",
+    "token": "46e72455cfcd6bb620a3956d5b54b47e",
+    "ui": "/images/curtain.svg",
+    "x": 135,
+    "y": 155,
+    "width": 50,
+    "height": 50,
+    "properties": [
+      {
+        "name": "开关",
+        "type": "range",
+        "id": "2-7",
+        "siid": 2,
+        "piid": 7,
+        "value": 0,
+        "min": 0,
+        "max": 100,
+        "marks": {
+          "0": "关",
+          "100": "开"
+        }
+      }
+    ],
+    "timers": [
+      {
+        "name": "开窗帘",
+        "description": "每天早上 8 点打开客厅窗帘",
+        "trigger_args": {
+          "trigger": "cron",
+          "hour": "8"
+        },
+        "properties":[
+          {
+            "id": "2-7",
+            "siid": 2,
+            "piid": 7,
+            "value": 100
+          }
+        ]
+      },
+      {
+        "name": "关窗帘",
+        "description": "每天晚上 6 点关闭客厅窗帘",
+        "trigger_args": {
+          "trigger": "cron",
+          "hour": "18"
+        },
+        "properties":[
+          {
+            "id": "2-7",
+            "siid": 2,
+            "piid": 7,
+            "value": 0
+          }
+        ]
+      }
+    ],
+    "scenes": [
+      {
+        "name": "全关",
+        "descrition": "把窗帘全拉上",
+        "properties": [
+          {
+            "id": "2-7",
+            "siid": 2,
+            "piid": 7,
+            "value": 0
+          }
+        ]
+      },
+      {
+        "name": "全开",
+        "descrition": "把窗帘全打开",
+        "properties": [
+          {
+            "id": "2-7",
+            "siid": 2,
+            "piid": 7,
+            "value": 100
+          }
+        ]
+      },
+      {
+        "name": "1/3",
+        "descrition": "把窗帘打开到 1/3 位置",
+        "properties": [
+          {
+            "id": "2-7",
+            "siid": 2,
+            "piid": 7,
+            "value": 33
+          }
+        ]
+      },
+      {
+        "name": "1/2",
+        "descrition": "把窗帘打开到 1/2 位置",
+        "properties": [
+          {
+            "id": "2-7",
+            "siid": 2,
+            "piid": 7,
+            "value": 50
+          }
+        ]
+      },
+      {
+        "name": "2/3",
+        "descrition": "把窗帘打开到 2/3 位置",
+        "properties": [
+          {
+            "id": "2-7",
+            "siid": 2,
+            "piid": 7,
+            "value": 67
+          }
+        ]
+      }
+    ]
+  }

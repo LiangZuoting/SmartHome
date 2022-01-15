@@ -1,5 +1,5 @@
 import { Button, Modal } from "antd";
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import ColorProperty from "./ColorProperty";
 import RangeProperty from "./RangeProperty";
 import SwitchPorperty from "./SwitchProperty";
@@ -11,19 +11,40 @@ import TextProperty from "./TextProperty";
 export default function SmartDevice(props) {
     const [currentScene, setCurrentScene] = useState(null);
     const [visible, setVisible] = useState(true);
+    const [json, setJson] = useState(props.json);
 
   function handleChange(pid, value) {
-      props.onChange(props.ip, pid, value);
+      let property = json.properties.find(p => p.id === pid);
+      property.ip = json.ip;
+      property.value = value;
+      fetch('/', {
+          headers: {
+              'content-type': 'application/json'
+          },
+          method: 'post',
+          body: JSON.stringify(property)
+      }).then(response => response.json())
+          .then(data => {
+              console.log('get device info after update, ', data);
+             setJson(data);
+          });
   }
 
+  useEffect(() => {
+      fetch(`/device/${json.ip}`).then(response => response.json()).then(data => {
+          console.log('get device info when mount, ', data);
+         setJson(data);
+      });
+  }, []);
+
   return (
-    <Modal visible={visible} title={<h2>{props.name}</h2>} centered={true} closable={true} afterClose={props.afterHide}
+    <Modal visible={visible} title={<h2>{json.name}</h2>} centered={true} closable={true} afterClose={props.afterHide}
     onCancel={()=>{
         setVisible(false);
     }}
      footer={
-        props.scenes === undefined ? null :
-            props.scenes.map((scene, index) => {
+        json.scenes === undefined ? null :
+            json.scenes.map((scene, index) => {
                 return <Button key={index} type={currentScene === index ? "primary" : "default"} onClick={()=>{
                     setCurrentScene(index);
                     scene.properties.forEach((property) => {
@@ -35,9 +56,9 @@ export default function SmartDevice(props) {
             }) 
     }>
         {
-            props.properties && <>
+            json.properties && <>
                 {
-                    props.properties.map((property, index) => {
+                    json.properties.map((property, index) => {
                         switch (property.type) {
                             case "bool":
                                 return (
