@@ -1,8 +1,8 @@
-import { Button, Modal } from "antd";
+import {Button, Modal, Spin} from "antd";
 import React, {useEffect, useState} from "react";
 import ColorProperty from "./ColorProperty";
 import RangeProperty from "./RangeProperty";
-import SwitchPorperty from "./SwitchProperty";
+import SwitchProperty from "./SwitchProperty";
 import 'antd/dist/antd.css';
 import RadioProperty from "./RadioProperty";
 import RangePlusProperty from "./RangePlusProperty";
@@ -12,8 +12,10 @@ export default function SmartDevice(props) {
     const [currentScene, setCurrentScene] = useState(null);
     const [visible, setVisible] = useState(true);
     const [json, setJson] = useState(props.json);
+    const [loading, setLoading] = useState(true);
 
   function handleChange(pid, value) {
+      setLoading(true);
       let property = json.properties.find(p => p.id === pid);
       property.ip = json.ip;
       property.value = value;
@@ -27,13 +29,16 @@ export default function SmartDevice(props) {
           .then(data => {
               console.log('get device info after update, ', data);
              setJson(data);
+             setLoading(false);
           });
   }
 
   useEffect(() => {
+      setLoading(true);
       fetch(`/device/${json.ip}`).then(response => response.json()).then(data => {
-          console.log('get device info when mount, ', data);
+          console.log('get device info when mount,', data);
          setJson(data);
+         setLoading(false);
       });
   }, []);
 
@@ -56,13 +61,13 @@ export default function SmartDevice(props) {
             }) 
     }>
         {
-            json.properties && <>
+            json.properties && <Spin spinning={loading} delay={200}>
                 {
                     json.properties.map((property, index) => {
                         switch (property.type) {
                             case "bool":
                                 return (
-                                    <SwitchPorperty
+                                    <SwitchProperty
                                         key={index}
                                         value={property.value}
                                         id={property.id}
@@ -133,8 +138,7 @@ export default function SmartDevice(props) {
                         }
                     })
                 }
-            </>
-            
+            </Spin>
         }
     </Modal>
   );

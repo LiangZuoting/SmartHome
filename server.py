@@ -123,8 +123,10 @@ def connect_miot_device(ip):
 def set_miot_property(ip, siid, piid, value, retry=0):
     try:
         miot_devs[ip].set_property_by(siid, piid, value)
+        dev_model[ip]['error'] = None
     except DeviceException as e:
         error(f'{format(e)} try_times={retry}')
+        dev_model[ip]['error'] = 'set property error'
         if retry > 2:
             return
         if connect_miot_device(ip) is not None:
@@ -134,8 +136,10 @@ def set_miot_property(ip, siid, piid, value, retry=0):
 def get_miot_property(ip, siid, piid, retry=0):
     try:
         ret = miot_devs[ip].get_property_by(siid, piid)
+        dev_model[ip]['error'] = None
     except DeviceException as e:
         error(f'{format(e)}')
+        dev_model[ip]['error'] = 'get property error'
         if retry > 2:
             return None
         if connect_miot_device(ip) is not None:
@@ -164,10 +168,13 @@ def apply_midea(ip, try_times=0):
     ac.apply()
     if not ac.active:
         error(f'apply midea error {ip}')
+        dev_model[ip]['error'] = 'apply error'
         if try_times > 2:
             return
         connect_midea_device(ip)
         apply_midea(ip, try_times + 1)
+    else:
+        dev_model[ip]['error'] = None
 
 
 def refresh_midea(ip, try_times=0):
@@ -175,10 +182,13 @@ def refresh_midea(ip, try_times=0):
     ac.refresh()
     if not ac.active:
         error(f'refresh midea error {ip}')
+        dev_model[ip]['error'] = 'refresh error'
         if try_times > 2:
             return
         connect_midea_device(ip)
         refresh_midea(ip, try_times + 1)
+    else:
+        dev_model[ip]['error'] = None
 
 
 @app.get('/')
@@ -197,7 +207,8 @@ async def update(request):
             ret = get_miot_property(ip, data['siid'], data['piid'])
             if not ret:
                 error(f'update cannot be executed for exception')
-                return json(dev_model[ip])
+                dev_model[ip]['error'] = 'get property error'
+                return
             status = ret[0]['value']
             if data['value']:
                 if sched.get_job(ip):
