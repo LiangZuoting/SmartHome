@@ -27,7 +27,6 @@ export default function SmartDevice(props) {
           body: JSON.stringify(property)
       }).then(response => response.json())
           .then(data => {
-              console.log('get device info after update, ', data);
              setJson(data);
              setLoading(false);
           });
@@ -36,7 +35,6 @@ export default function SmartDevice(props) {
   useEffect(() => {
       setLoading(true);
       fetch(`/device/${json.ip}`).then(response => response.json()).then(data => {
-          console.log('get device info when mount,', data);
          setJson(data);
          setLoading(false);
       });
@@ -61,7 +59,7 @@ export default function SmartDevice(props) {
             }) 
     }>
         {
-            json.properties && <Spin spinning={loading} delay={200}>
+            json.properties && <Spin spinning={loading}>
                 {
                     json.properties.map((property, index) => {
                         switch (property.type) {

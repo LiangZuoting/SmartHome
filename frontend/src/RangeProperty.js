@@ -16,7 +16,6 @@ export default function RangeProperty(props) {
       step={step}
       value={props.value}
       onAfterChange={(v)=>{
-        console.log(`onAfterChange ${v}`);
         setValue(v);
         props.onChange(props.id, v);
       }}

@@ -9,7 +9,7 @@ from sanic.response import file
 import ujson
 from msmart.device import air_conditioning_device as MideaAC
 
-DEBUG = True
+DEBUG = False
 
 if DEBUG:
     from sanic.log import logger
