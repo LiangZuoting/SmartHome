@@ -53,19 +53,35 @@ def error(msg):
 
 
 def scheduler_job(ip, protocol, properties):
+    """
+    top level method, called when timer is triggered
+    :param ip:
+    :param protocol:
+    :param properties:
+    :return:
+    """
     if protocol == 'miot':
-        for p in properties:
-            if not set_miot_property(ip, p['siid'], p['piid'], p['value']):
-                error(f'set_miot_property on {ip} failed')
-                return
+        if connect_miot_device(ip):
+            for p in properties:
+                if not set_miot_property(ip, p['siid'], p['piid'], p['value']):
+                    error(f'scheduler_job failed for could not set_miot_property to {ip}')
+                    return
+            return
     elif protocol == 'midea':
-        for p in properties:
-            # convert int values of json file to its orginal type in msmart,
-            # with getattr we can know type msmart wanted.
-            # e.g. fan_speed whose getter returns fan_speed_enum and setter accepts fan_speed_enum only.
-            if not set_midea_property(ip, p['id'], type(getattr(midea_acs[ip], p['id']))(p['value'])):
+        if connect_midea_device(ip):
+            for p in properties:
+                # convert int values of json file to its orginal type in msmart,
+                # with getattr we can know type msmart wanted.
+                # e.g. fan_speed whose getter returns fan_speed_enum and setter accepts fan_speed_enum only.
+                set_midea_property(ip, p['id'], type(getattr(midea_acs[ip], p['id']))(p['value']))
+            if not apply_midea(ip):
+                error(f'scheduler_job failed for could not set_midea_property to {ip}')
                 return
-        apply_midea(ip)
+            return
+    else:
+        error(f'scheduler_job failed for unknown protocol {protocol} on {ip}')
+        return
+    error(f'scheduler_job failed for could not connect to device {ip}')
 
 
 app = Sanic(__name__)
@@ -105,7 +121,6 @@ def connect_miot_device(ip, force=False):
         return miot_devs[ip]
     d = dev_model[ip]
     try:
-        info(f'connecting miot device {d["name"]}')
         miot_devs[ip] = MiotDevice(ip, d['token'], lazy_discover=False)
         d['error'] = None
     except DeviceException as e:
@@ -116,8 +131,14 @@ def connect_miot_device(ip, force=False):
 
 
 def set_miot_property(ip, siid, piid, value):
-    if not connect_miot_device(ip):
-        return False
+    """
+    call connect_miot_device before this function to make sure device has been connected
+    :param ip: 
+    :param siid: 
+    :param piid: 
+    :param value: 
+    :return: 
+    """
     try:
         miot_devs[ip].set_property_by(siid, piid, value)
         dev_model[ip]['error'] = None
@@ -125,19 +146,26 @@ def set_miot_property(ip, siid, piid, value):
     except DeviceException as e:
         error(f'{format(e)}')
         if not connect_miot_device(ip, True):
+            error(f'set_miot_property failed for could not connect to {ip}')
             return False
         return set_miot_property(ip, siid, piid, value)
 
 
 def get_miot_property(ip, siid, piid):
-    if not connect_miot_device(ip):
-        return None
+    """
+    call connect_miot_device before this function to make sure device has been connected
+    :param ip: 
+    :param siid: 
+    :param piid: 
+    :return: 
+    """
     try:
         ret = miot_devs[ip].get_property_by(siid, piid)
         dev_model[ip]['error'] = None
     except DeviceException as e:
         error(f'{format(e)}')
         if not connect_miot_device(ip, True):
+            error(f'get_miot_property failed for could not connect to {ip}')
             return None
         return get_miot_property(ip, siid, piid)
     return ret
@@ -145,10 +173,8 @@ def get_miot_property(ip, siid, piid):
 
 def connect_midea_device(ip, force=False):
     if ip in midea_acs and not force:
-        miot_devs[ip]['error'] = None
         return midea_acs[ip]
     d = dev_model[ip]
-    info(f'connecting midea device {d["name"]}')
     ac = MideaAC(ip, int(d['id']), d['port'])
     ret = ac.authenticate(d['key'], d['token'])
     if not ret:
@@ -161,43 +187,48 @@ def connect_midea_device(ip, force=False):
 
 
 def set_midea_property(ip, pid, value):
-    if not connect_midea_device(ip):
-        return False
     setattr(midea_acs[ip], pid, value)
-    return True
 
 
 def get_midea_property(ip, pid):
-    if not connect_midea_device(ip):
-        return None
     return getattr(midea_acs[ip], pid)
 
 
 def apply_midea(ip):
-    if not connect_midea_device(ip):
-        return False
+    """
+    call connect_midea_device before this function to make sure device has been connected
+    :param ip: 
+    :return: 
+    """
     ac = midea_acs[ip]
     ac.apply()
     if not ac.active:
         error(f'apply midea error {ip}')
         if not connect_midea_device(ip, True):
+            error(f'apply_midea failed for could not connect to {ip}')
             return False
         return apply_midea(ip)
     else:
+        dev_model[ip]['error'] = None
         return True
 
 
 def refresh_midea(ip):
-    if not connect_midea_device(ip):
-        return False
+    """
+    call connect_midea_device before this function to make sure device has been connected
+    :param ip: 
+    :return: 
+    """
     ac = midea_acs[ip]
     ac.refresh()
     if not ac.active:
         error(f'refresh midea error {ip}')
         if not connect_midea_device(ip, True):
+            error(f'refresh_midea failed for could not connect to {ip}')
             return False
         return refresh_midea(ip)
     else:
+        dev_model[ip]['error'] = None
         return True
 
 
@@ -208,44 +239,67 @@ async def index(request):
 
 @app.post('/')
 async def update(request):
+    """
+    update specific device
+    :param request:
+    :return: return older config if errors occurred, or return latest status of device
+    """
     data = request.json
     ip = data['ip']
     protocol = dev_model[ip]['protocol']
     if protocol == 'miot':
+        if not connect_miot_device(ip):
+            error(f'update returns early for could not connect to {ip}')
+            return json(dev_model[ip])
         # post from ipc
         # it should only be SWITCH property posted.
         if 'from' in data and data['from'] == 'monitor':
-            ret = get_miot_property(ip, data['siid'], data['piid'])
-            if not ret:
-                error(f'update cannot be executed for exception')
-                dev_model[ip]['error'] = 'get property error'
-                return json(dev_model[ip])
-            status = ret[0]['value']
+            if sched.get_job(ip):
+                sched.remove_job(ip)
             if data['value']:
-                if sched.get_job(ip):
-                    sched.remove_job(ip)
-                if not status:
-                    set_miot_property(ip, data['siid'], data['piid'], data['value'])
+                if not set_miot_property(ip, data['siid'], data['piid'], data['value']):
+                    error(f'update returns early for could not set_miot_property to {ip}')
+                    return json(dev_model[ip])
             else:
-                if not sched.get_job(ip) and status:
-                    # when nobody, closing it 2 minutes later
-                    sched.add_job(scheduler_job, args=(ip, data['protocol'], [data]), trigger='interval', minutes=2,
-                                  id=ip)
+                # when nobody, closing it 2 minutes later
+                sched.add_job(scheduler_job, args=(ip, data['protocol'], [data]), trigger='interval', minutes=2,
+                              id=ip)
         else:
-            set_miot_property(ip, data['siid'], data['piid'], data['value'])
+            if not set_miot_property(ip, data['siid'], data['piid'], data['value']):
+                error(f'update returns early for could not set_miot_property to {ip}')
+                return json(dev_model[ip])
     elif protocol == 'midea':
+        if not connect_midea_device(ip):
+            error(f'update returns early for could not connect to {ip}')
+            return json(dev_model[ip])
         set_midea_property(ip, data['id'], type(getattr(d, data['id']))(data['value']))
-        apply_midea(ip)
+        if not apply_midea(ip):
+            error(f'update returns early for apply_midea failed on {ip}')
+            return json(dev_model[ip])
     return json(refresh_device(ip))
 
 
 @app.get('/devices')
 async def get_devices(request):
+    """
+    get all devices' last status
+    :param request:
+    :return:
+    """
     return json(dev_model)
 
 
 @app.get('/device/<ip:path>')  # ip address is a path but not a str
 async def get_device(request, ip: str):
+    protocol = dev_model[ip]['protocol']
+    if protocol == 'miot':
+        if not connect_miot_device(ip):
+            error(f'get_device returns early for could not connect to {ip}')
+            return json(dev_model[ip])
+    elif protocol == 'midea':
+        if not connect_midea_device(ip):
+            error(f'get_device returns early for could not connect to {ip}')
+            return json(dev_model[ip])
     return json(refresh_device(ip))
 
 
@@ -256,22 +310,15 @@ def refresh_device(ip):
         for prop in d['properties']:
             ret = get_miot_property(ip, prop['siid'], prop['piid'])
             if not ret:
-                error(f'cannot get property of device {d["name"]}')
-                d['error'] = 'get property error'
+                error(f'refresh_device returns early for cannot get_miot_property on {d["name"]}')
                 return d
-            else:
-                prop['value'] = ret[0]['value']
+            prop['value'] = ret[0]['value']
     elif protocol == 'midea':
         for prop in d['properties']:
             ret = get_midea_property(midea_acs[ip], prop['id'])
-            if not ret:
-                error(f'cannot get property of device {d["name"]}')
-                d['error'] = 'get property error'
-                return d
             if isinstance(ret, Enum):
                 ret = ret.value
             prop['value'] = ret
-    d['error'] = None
     return d
 
 
