@@ -9,9 +9,13 @@
 1. 拆分设备描述文件，每一个设备单独一个 json 文件；
 2. 首页启动时不再获取全部设备最新状态，延迟到用户浏览具体设备时更新。
 
+2022.02.05:
+
+1. 集成美的空调发现功能。因为美的的 token 和 key 每次重新供电时都会变化。
+
 ## 框架
 
-前端：[React.js](https://reactjs.org/) + ~~[Spectre.css](https://picturepan2.github.io/spectre/)~~ [AntD](https://ant.design/components/overview-cn/)
+前端：[React.js](https://reactjs.org/) + [~~Spectre.css~~](https://picturepan2.github.io/spectre/) [AntD](https://ant.design/components/overview-cn/)
 
 后端：~~Flask~~ [Sanic](https://sanicframework.org/en/)
 

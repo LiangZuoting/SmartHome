@@ -1,133 +1,139 @@
 {
-    "name": "主卧空调",
+    "name": "\u4e3b\u5367\u7a7a\u8c03",
     "protocol": "midea",
     "ip": "192.168.3.79",
     "id": 196812581433254,
     "port": 6444,
-    "token": "625D14AC7670E9B9C8DFFE7B9F61A7C2526EFD18BB46ABA5F9C89879DFACCCC251CE7D35FF7B644CEC23C1DC98604D2CD9EBF8DFA209C0F14925F589BF289B13",
-    "key": "B3B5EAC9A5594996BA22CCF79A6D1AEE4BF7843F26E6424EA4CD42DDE29DCE49",
+    "token": "A38E87C6BE9F2688C19740AC5BA863BAB3CE15D92829931A5F5BDF110C51928E5E9810699DDBB5DD5AEAB958913C1357EC27CE1554AED3BBD8148A97D8A17478",
+    "key": "DFE04D2018EE453F8C59735E02ED2670D68F0090F2B241498DBAEC6E5B764073",
     "ui": "/images/ac-left.svg",
     "x": 162.5,
     "y": 642.5,
     "width": 52,
     "height": 96,
     "properties": [
-      {
-        "name": "开关",
-        "type": "bool",
-        "id": "power_state",
-        "value": false,
-        "trueText": "开",
-        "falseText": "关"
-      },
-      {
-        "name": "温度",
-        "type": "range+",
-        "id": "target_temperature",
-        "min": 16,
-        "max": 31,
-        "step": 0.5,
-        "marks": {
-          "16": "16°C",
-          "26": "26°C",
-          "31": "31°C"
+        {
+            "name": "\u5f00\u5173",
+            "type": "bool",
+            "id": "power_state",
+            "value": false,
+            "trueText": "\u5f00",
+            "falseText": "\u5173"
+        },
+        {
+            "name": "\u6e29\u5ea6",
+            "type": "range+",
+            "id": "target_temperature",
+            "min": 16,
+            "max": 31,
+            "step": 0.5,
+            "marks": {
+                "16": "16\u00b0C",
+                "26": "26\u00b0C",
+                "31": "31\u00b0C"
+            },
+            "value": 26.0
+        },
+        {
+            "name": "\u529f\u80fd",
+            "type": "radio",
+            "id": "operational_mode",
+            "values": [
+                {
+                    "value": 1,
+                    "name": "\u81ea\u52a8"
+                },
+                {
+                    "value": 2,
+                    "name": "\u5236\u51b7"
+                },
+                {
+                    "value": 3,
+                    "name": "\u5e72\u71e5"
+                },
+                {
+                    "value": 4,
+                    "name": "\u52a0\u70ed"
+                },
+                {
+                    "value": 5,
+                    "name": "\u98ce\u6247"
+                }
+            ],
+            "value": 4
+        },
+        {
+            "name": "\u98ce\u901f",
+            "type": "radio",
+            "id": "fan_speed",
+            "values": [
+                {
+                    "value": 102,
+                    "name": "\u81ea\u52a8"
+                },
+                {
+                    "value": 100,
+                    "name": "\u5168\u901f"
+                },
+                {
+                    "value": 80,
+                    "name": "\u9ad8\u901f"
+                },
+                {
+                    "value": 60,
+                    "name": "\u4e2d\u901f"
+                },
+                {
+                    "value": 40,
+                    "name": "\u4f4e\u901f"
+                },
+                {
+                    "value": 20,
+                    "name": "\u9759\u901f"
+                }
+            ],
+            "value": 102
+        },
+        {
+            "name": "\u6446\u98ce",
+            "type": "radio",
+            "id": "swing_mode",
+            "values": [
+                {
+                    "value": 0,
+                    "name": "\u5173"
+                },
+                {
+                    "value": 3,
+                    "name": "\u5de6\u53f3"
+                },
+                {
+                    "value": 12,
+                    "name": "\u4e0a\u4e0b"
+                },
+                {
+                    "value": 15,
+                    "name": "\u4e0a\u4e0b\u5de6\u53f3"
+                }
+            ],
+            "value": 0
+        },
+        {
+            "name": "ECO",
+            "type": "bool",
+            "id": "eco_mode",
+            "value": false,
+            "trueText": "\u5f00",
+            "falseText": "\u5173"
+        },
+        {
+            "name": "\u5ba4\u6e29",
+            "type": "text",
+            "id": "indoor_temperature",
+            "value": 17.9,
+            "readonly": true
         }
-      },
-      {
-        "name": "功能",
-        "type": "radio",
-        "id": "operational_mode",
-        "values": [
-          {
-            "value": 1,
-            "name": "自动"
-          },
-          {
-            "value": 2,
-            "name": "制冷"
-          },
-          {
-            "value": 3,
-            "name": "干燥"
-          },
-          {
-            "value": 4,
-            "name": "加热"
-          },
-          {
-            "value": 5,
-            "name": "风扇"
-          }
-        ]
-      },
-      {
-        "name": "风速",
-        "type": "radio",
-        "id": "fan_speed",
-        "values": [
-          {
-            "value": 102,
-            "name": "自动"
-          },
-          {
-            "value": 100,
-            "name": "全速"
-          },
-          {
-            "value": 80,
-            "name": "高速"
-          },
-          {
-            "value": 60,
-            "name": "中速"
-          },
-          {
-            "value": 40,
-            "name": "低速"
-          },
-          {
-            "value": 20,
-            "name": "静速"
-          }
-        ]
-      },
-      {
-        "name": "摆风",
-        "type": "radio",
-        "id": "swing_mode",
-        "values": [
-          {
-            "value": 0,
-            "name": "关"
-          },
-          {
-            "value": 3,
-            "name": "左右"
-          },
-          {
-            "value": 12,
-            "name": "上下"
-          },
-          {
-            "value": 15,
-            "name": "上下左右"
-          }
-        ]
-      },
-      {
-        "name": "ECO",
-        "type":"bool",
-        "id": "eco_mode",
-        "value": false,
-        "trueText":"开",
-        "falseText":"关"
-      },
-      {
-        "name": "室温",
-        "type": "text",
-        "id": "indoor_temperature",
-        "value": "0℃",
-        "readonly": true
-      }
-    ]
-  }
+    ],
+    "json_file": "./model/devices/mainroom_ac.json",
+    "error": null
+}

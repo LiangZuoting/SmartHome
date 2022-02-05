@@ -4,10 +4,12 @@ from enum import Enum
 from miio import MiotDevice, DeviceException
 from apscheduler.schedulers.background import BackgroundScheduler
 from sanic import Sanic
-from sanic.response import json
-from sanic.response import file
+from sanic.response import json, file, empty
 import ujson
+from json import dumps
 from msmart.device import air_conditioning_device as MideaAC
+from msmart.scanner import MideaDiscovery
+from msmart.const import OPEN_MIDEA_APP_ACCOUNT, OPEN_MIDEA_APP_PASSWORD
 
 DEBUG = False
 
@@ -94,6 +96,7 @@ for filename in os.listdir(devices_dir):
     if os.path.isfile(device_path) and filename.endswith('.json'):
         with open(device_path) as f:
             d = ujson.loads(f.read())
+            d['json_file'] = device_path  # remember devices' config file path to update
             dev_model[d['ip']] = d
             if 'timers' in d:
                 for t in d['timers']:
@@ -237,6 +240,28 @@ async def get_devices(request):
 @app.get('/device/<ip:path>')  # ip address is a path but not a str
 async def get_device(request, ip: str):
     return json(refresh_device(ip))
+
+
+@app.get('/discover/<ip:path>')
+async def discover_device(request, ip: str):
+    d = dev_model[ip]
+    protocol = d['protocol']
+    if protocol == 'midea':
+        try:
+            discovery = MideaDiscovery(account=OPEN_MIDEA_APP_ACCOUNT, password=OPEN_MIDEA_APP_PASSWORD, amount=1)
+            found_devices = await discovery.get_all()
+        except Exception:
+            pass
+        else:
+            if found_devices:
+                for device in found_devices:
+                    if device.ip in dev_model:
+                        dev_model[ip]['token'] = device.token
+                        dev_model[ip]['key'] = device.key
+                        with open(dev_model[ip]['json_file'], mode='w') as f:
+                            f.write(dumps(dev_model[ip], indent=4))
+                return json(refresh_device(ip))
+    return json({'desc': 'error'}, status=500)
 
 
 def refresh_device(ip):

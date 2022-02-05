@@ -1,5 +1,5 @@
-import {Button, Modal, Spin} from "antd";
-import React, {useEffect, useState} from "react";
+import {Button, Col, Modal, Row, Spin} from "antd";
+import React, {useEffect, useRef, useState} from "react";
 import ColorProperty from "./ColorProperty";
 import RangeProperty from "./RangeProperty";
 import SwitchProperty from "./SwitchProperty";
@@ -13,6 +13,7 @@ export default function SmartDevice(props) {
     const [visible, setVisible] = useState(true);
     const [json, setJson] = useState(props.json);
     const [loading, setLoading] = useState(true);
+    const [discoverEnabled, setDiscoverEnabled] = useState(true);
 
   function handleChange(pid, value) {
       setLoading(true);
@@ -32,6 +33,22 @@ export default function SmartDevice(props) {
           });
   }
 
+  function handleDiscoverDevice() {
+      setLoading(true);
+      setDiscoverEnabled(false);
+      fetch(`/discover/${json.ip}`).then(response => {
+          if (response.ok) {
+              response.json().then(data => {
+                  setLoading(false);
+                  setJson(data);
+                  setDiscoverEnabled(true);
+              });
+          } else {
+              setDiscoverEnabled(true);
+          }
+      });
+  }
+
   useEffect(() => {
       setLoading(true);
       fetch(`/device/${json.ip}`).then(response => response.json()).then(data => {
@@ -41,7 +58,9 @@ export default function SmartDevice(props) {
   }, []);
 
   return (
-    <Modal visible={visible} title={<h2>{json.name}</h2>} centered={true} closable={true} afterClose={props.afterHide}
+    <Modal visible={visible} title={
+        json && json.protocol === "midea" ? <Row><Col><h2>{json.name}</h2></Col><Col offset={4}><Button danger disabled={!discoverEnabled} onClick={handleDiscoverDevice}>重新发现设备</Button></Col></Row> : <h2>{json.name}</h2>
+    } centered={true} closable={true} afterClose={props.afterHide}
     onCancel={()=>{
         setVisible(false);
     }}
