@@ -111,8 +111,9 @@ for filename in os.listdir(devices_dir):
             dev_model[d['ip']] = d
             if 'timers' in d:
                 for t in d['timers']:
-                    sched.add_job(scheduler_job, args=(d['ip'], d['protocol'], t['properties']),
-                                  **t['trigger_args'])
+                    for trigger in t['trigger_args']:
+                        sched.add_job(scheduler_job, args=(d['ip'], d['protocol'], t['properties']),
+                                      **trigger)
 
 
 # start scheduler

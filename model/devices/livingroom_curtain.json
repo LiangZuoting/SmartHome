@@ -27,11 +27,13 @@
     "timers": [
       {
         "name": "开窗帘",
-        "description": "每天早上 8 点打开客厅窗帘",
-        "trigger_args": {
+        "description": "每天早上 7 点打开客厅窗帘",
+        "trigger_args": [
+          {
           "trigger": "cron",
-          "hour": "8"
-        },
+          "hour": "7"
+        }
+        ],
         "properties":[
           {
             "id": "2-7",
@@ -43,11 +45,31 @@
       },
       {
         "name": "关窗帘",
-        "description": "每天晚上 6 点关闭客厅窗帘",
-        "trigger_args": {
-          "trigger": "cron",
-          "hour": "18"
-        },
+        "description": "日落时关闭客厅窗帘",
+        "trigger_args": [
+          {
+            "trigger": "cron",
+            "month": "1,11,12",
+            "hour": "18"
+          },
+          {
+            "trigger": "cron",
+            "month": "2,3,10",
+            "hour": "18",
+            "minute": "30"
+          },
+          {
+            "trigger": "cron",
+            "month": "4,5,9",
+            "hour": "19"
+          },
+          {
+            "trigger": "cron",
+            "month": "6-8",
+            "hour": "19",
+            "minute": "30"
+          }
+        ],
         "properties":[
           {
             "id": "2-7",
