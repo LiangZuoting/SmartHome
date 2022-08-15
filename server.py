@@ -4,10 +4,10 @@ from enum import Enum
 from miio import MiotDevice, DeviceException
 from apscheduler.schedulers.background import BackgroundScheduler
 from sanic import Sanic
-from sanic.response import json, file, empty
+from sanic.response import json, file
 import ujson
 from json import dumps
-from msmart.device import air_conditioning_device as MideaAC
+from msmart.device import air_conditioning
 from msmart.scanner import MideaDiscovery
 from msmart.const import OPEN_MIDEA_APP_ACCOUNT, OPEN_MIDEA_APP_PASSWORD
 
@@ -179,7 +179,7 @@ def connect_midea_device(ip, force=False):
     if ip in midea_acs and not force:
         return midea_acs[ip]
     d = dev_model[ip]
-    ac = MideaAC(ip, int(d['id']), d['port'])
+    ac = air_conditioning(ip, int(d['id']), d['port'])
     ret = ac.authenticate(d['key'], d['token'])
     if not ret:
         error(f'authenticate midea error {ip}')
@@ -315,7 +315,7 @@ async def discover_device(request, ip: str):
         try:
             discovery = MideaDiscovery(account=OPEN_MIDEA_APP_ACCOUNT, password=OPEN_MIDEA_APP_PASSWORD, amount=1)
             found_devices = await discovery.get_all()
-        except Exception:
+        except ...:
             pass
         else:
             if found_devices:
