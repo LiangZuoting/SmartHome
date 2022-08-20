@@ -11,7 +11,7 @@ from msmart.device import air_conditioning_device as MideaAC
 from msmart.scanner import MideaDiscovery
 from msmart.const import OPEN_MIDEA_APP_ACCOUNT, OPEN_MIDEA_APP_PASSWORD
 
-DEBUG = False
+DEBUG = True
 
 if DEBUG:
     from sanic.log import logger
@@ -315,8 +315,8 @@ async def discover_device(request, ip: str):
         try:
             discovery = MideaDiscovery(account=OPEN_MIDEA_APP_ACCOUNT, password=OPEN_MIDEA_APP_PASSWORD, amount=1)
             found_devices = await discovery.get_all()
-        except Exception:
-            pass
+        except Exception as e:
+            error(f'discover midea failed: {format(e)}')
         else:
             if found_devices:
                 for device in found_devices:
