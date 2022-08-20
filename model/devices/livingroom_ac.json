@@ -60,6 +60,47 @@
         }
       },
       {
+        "name": "风速",
+        "type": "radio",
+        "id": "3-2",
+        "siid": 3,
+        "piid": 2,
+        "values": [
+          {
+            "value": 0,
+            "name": "自动"
+          },
+          {
+            "value": 1,
+            "name": "1级"
+          },
+          {
+            "value": 2,
+            "name": "2级"
+          },
+          {
+            "value": 3,
+            "name": "3级"
+          },
+          {
+            "value": 4,
+            "name": "4级"
+          },
+          {
+            "value": 5,
+            "name": "5级"
+          },
+          {
+            "value": 6,
+            "name": "6级"
+          },
+          {
+            "value": 7,
+            "name": "7级"
+          }
+        ]
+      },
+      {
         "name": "湿度",
         "type": "range",
         "id": "2-14",
