@@ -56,7 +56,9 @@ class MideaACDevice(MiedaDevice):
     _fresh_air_fan_speeds = {
         0: "Off", 20: "Silent", 40: "Low", 60: "Medium", 80: "High", 100: "Boost"
     }
-    _fresh_air_fan_speeds_rev = dict(reversed(_fresh_air_fan_speeds.items()))
+    _fresh_air_fan_speeds_rev = {
+        100: "Boost", 80: "High", 60: "Medium", 40: "Low", 20: "Silent", 0: "Off"
+    }
 
     def __init__(
             self,
