@@ -15,7 +15,7 @@
       {
         "name": "开关",
         "type": "bool",
-        "id": "power_state",
+        "id": "power",
         "value": false,
         "trueText": "开",
         "falseText": "关"
@@ -36,7 +36,7 @@
       {
         "name": "功能",
         "type": "radio",
-        "id": "operational_mode",
+        "id": "mode",
         "values": [
           {
             "value": 1,
@@ -92,27 +92,20 @@
         ]
       },
       {
-        "name": "摆风",
-        "type": "radio",
-        "id": "swing_mode",
-        "values": [
-          {
-            "value": 0,
-            "name": "关"
-          },
-          {
-            "value": 3,
-            "name": "左右"
-          },
-          {
-            "value": 12,
-            "name": "上下"
-          },
-          {
-            "value": 15,
-            "name": "上下左右"
-          }
-        ]
+        "name": "上下摆风",
+        "type": "bool",
+        "id": "swing_vertical",
+        "value": false,
+        "trueText": "开",
+        "falseText": "关"
+      },
+      {
+        "name": "左右摆风",
+        "type": "bool",
+        "id": "swing_horizontal",
+        "value": false,
+        "trueText": "开",
+        "falseText": "关"
       },
       {
         "name": "ECO",

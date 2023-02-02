@@ -13,6 +13,10 @@
 
 1. 集成美的空调发现功能。因为美的的 token 和 key 每次重新供电时都会变化。
 
+2023.02.02:
+
+1. 使用[此库](https://github.com/georgezhao2010/midea_ac_lan) 替换原有美的库。新库代码更清晰，**动态获取 token 环节上更可靠**——我的美的空调终于可以稳定使用了。
+
 ## 框架
 
 前端：[React.js](https://reactjs.org/) + [~~Spectre.css~~](https://picturepan2.github.io/spectre/) [AntD](https://ant.design/components/overview-cn/)

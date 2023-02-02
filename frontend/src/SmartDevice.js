@@ -58,9 +58,7 @@ export default function SmartDevice(props) {
   }, []);
 
   return (
-    <Modal visible={visible} title={
-        json && json.protocol === "midea" ? <Row><Col><h2>{json.name}</h2></Col><Col offset={4}><Button danger disabled={!discoverEnabled} onClick={handleDiscoverDevice}>重新发现设备</Button></Col></Row> : <h2>{json.name}</h2>
-    } centered={true} closable={true} afterClose={props.afterHide}
+    <Modal visible={visible} title={<h2>{json.name}</h2>} centered={true} closable={true} afterClose={props.afterHide}
     onCancel={()=>{
         setVisible(false);
     }}

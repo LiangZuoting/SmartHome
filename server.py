@@ -1,15 +1,18 @@
 #!usr/bin/env python3
 import os
 from enum import Enum
+
+import aiohttp
 from miio import MiotDevice, DeviceException
 from apscheduler.schedulers.background import BackgroundScheduler
 from sanic import Sanic
 from sanic.response import json, file, empty
 import ujson
 from json import dumps
-from msmart.device import air_conditioning_device as MideaAC
-from msmart.scanner import MideaDiscovery
-from msmart.const import OPEN_MIDEA_APP_ACCOUNT, OPEN_MIDEA_APP_PASSWORD
+
+from midea_ac_lan.midea.devices.ac.device import MideaACDevice
+
+from midea_ac_lan.midea.core.cloud import MideaCloud
 
 DEBUG = True
 
@@ -72,13 +75,10 @@ def scheduler_job(ip, protocol, properties):
     elif protocol == 'midea':
         if connect_midea_device(ip):
             for p in properties:
-                # convert int values of json file to its orginal type in msmart,
+                # convert int values of json file to its original type in msmart,
                 # with getattr we can know type msmart wanted.
                 # e.g. fan_speed whose getter returns fan_speed_enum and setter accepts fan_speed_enum only.
                 set_midea_property(ip, p['id'], type(getattr(midea_acs[ip], p['id']))(p['value']))
-            if not apply_midea(ip):
-                error(f'scheduler_job failed for could not set_midea_property to {ip}')
-                return
             return
     else:
         error(f'scheduler_job failed for unknown protocol {protocol} on {ip}')
@@ -105,7 +105,7 @@ devices_dir = './model/devices'
 for filename in os.listdir(devices_dir):
     device_path = os.path.join(devices_dir, filename)
     if os.path.isfile(device_path) and filename.endswith('.json'):
-        with open(device_path) as f:
+        with open(device_path, encoding='utf-8') as f:
             d = ujson.loads(f.read())
             d['json_file'] = device_path  # remember devices' config file path to update
             dev_model[d['ip']] = d
@@ -179,23 +179,19 @@ def connect_midea_device(ip, force=False):
     if ip in midea_acs and not force:
         return midea_acs[ip]
     d = dev_model[ip]
-    ac = MideaAC(ip, int(d['id']), d['port'])
-    ret = ac.authenticate(d['key'], d['token'])
-    if not ret:
-        error(f'authenticate midea error {ip}')
-        d['error'] = 'authenticate device failed'
-        return None
+    ac = MideaACDevice('', int(d['id']), ip, d['port'], d['token'], d['key'], 3, '22012461', None)
+    ac.connect()
     d['error'] = None
     midea_acs[ip] = ac
     return ac
 
 
 def set_midea_property(ip, pid, value):
-    setattr(midea_acs[ip], pid, value)
+    midea_acs[ip].set_attribute(pid, value)
 
 
 def get_midea_property(ip, pid):
-    return getattr(midea_acs[ip], pid)
+    return midea_acs[ip].get_attribute(pid)
 
 
 def apply_midea(ip):
@@ -276,10 +272,7 @@ async def update(request):
         if not connect_midea_device(ip):
             error(f'update returns early for could not connect to {ip}')
             return json(dev_model[ip])
-        set_midea_property(ip, data['id'], type(getattr(d, data['id']))(data['value']))
-        if not apply_midea(ip):
-            error(f'update returns early for apply_midea failed on {ip}')
-            return json(dev_model[ip])
+        set_midea_property(ip, data['id'], type(midea_acs[ip].get_attribute(data['id']))(data['value']))
     return json(refresh_device(ip))
 
 
@@ -301,9 +294,16 @@ async def get_device(request, ip: str):
             error(f'get_device returns early for could not connect to {ip}')
             return json(dev_model[ip])
     elif protocol == 'midea':
-        if not connect_midea_device(ip):
+        session = aiohttp.ClientSession()
+        cloud = MideaCloud(session, 'your midea account', 'your password', 'cn')
+        await cloud.login()
+        token, key = await cloud.get_token(dev_model[ip]['id'], byte_order_big=True)
+        dev_model[ip]['token'] = token
+        dev_model[ip]['key'] = key
+        if not connect_midea_device(ip, True):
             error(f'get_device returns early for could not connect to {ip}')
             return json(dev_model[ip])
+        await session.close()
     return json(refresh_device(ip))
 
 
@@ -313,19 +313,19 @@ async def discover_device(request, ip: str):
     protocol = d['protocol']
     if protocol == 'midea':
         try:
-            discovery = MideaDiscovery(account=OPEN_MIDEA_APP_ACCOUNT, password=OPEN_MIDEA_APP_PASSWORD, amount=1)
-            found_devices = await discovery.get_all()
+            session = aiohttp.ClientSession()
+            cloud = MideaCloud(session, '18688867530', 'raul19870101', 'cn')
+            await cloud.login()
+            token, key = await cloud.get_token(d['id'])
         except Exception as e:
             error(f'discover midea failed: {format(e)}')
         else:
-            if found_devices:
-                for device in found_devices:
-                    if device.ip in dev_model:
-                        dev_model[ip]['token'] = device.token
-                        dev_model[ip]['key'] = device.key
-                        with open(dev_model[ip]['json_file'], mode='w') as f:
-                            f.write(dumps(dev_model[ip], indent=4))
-                return json(refresh_device(ip))
+            info(f'discovered midea device: {token} {key}')
+            dev_model[ip]['token'] = token
+            dev_model[ip]['key'] = key
+            with open(dev_model[ip]['json_file'], mode='w') as f:
+                f.write(dumps(dev_model[ip], indent=4))
+            return json(refresh_device(ip))
     return json({'desc': 'error'}, status=500)
 
 
@@ -341,7 +341,7 @@ def refresh_device(ip):
             prop['value'] = ret[0]['value']
     elif protocol == 'midea':
         for prop in d['properties']:
-            ret = get_midea_property(midea_acs[ip], prop['id'])
+            ret = get_midea_property(ip, prop['id'])
             if isinstance(ret, Enum):
                 ret = ret.value
             prop['value'] = ret
