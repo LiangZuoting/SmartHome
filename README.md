@@ -59,7 +59,7 @@ Python：3.7.3
 
 HTTP 服务器：nginx
 
-网关：Gunicorn
+~~网关：Gunicorn~~
 
 ### 大致操作步骤
 
@@ -121,4 +121,4 @@ server {
 
 ## 问题
 
-1. 美的空调在断电重连时会重新分配 token 和 key。应该将 midea-discover 设备发现功能集成到 msmart。
+~~1. 美的空调在断电重连时会重新分配 token 和 key。应该将 midea-discover 设备发现功能集成到 msmart。~~
