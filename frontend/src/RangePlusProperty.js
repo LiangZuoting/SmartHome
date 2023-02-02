@@ -35,7 +35,7 @@ export default function RangePlusProperty(props) {
                         max={props.max} 
                         marks={props.marks ? props.marks : null}
                         step={step} 
-                        defaultValue={props.value} 
+                        value={value}
                         onAfterChange={
                             (v) => {
                                 setValue(v);

@@ -83,7 +83,7 @@
     "scenes": [
       {
         "name": "全关",
-        "descrition": "把窗帘全拉上",
+        "description": "把窗帘全拉上",
         "properties": [
           {
             "id": "2-7",
@@ -95,7 +95,7 @@
       },
       {
         "name": "全开",
-        "descrition": "把窗帘全打开",
+        "description": "把窗帘全打开",
         "properties": [
           {
             "id": "2-7",
@@ -107,7 +107,7 @@
       },
       {
         "name": "1/3",
-        "descrition": "把窗帘打开到 1/3 位置",
+        "description": "把窗帘打开到 1/3 位置",
         "properties": [
           {
             "id": "2-7",
@@ -119,7 +119,7 @@
       },
       {
         "name": "1/2",
-        "descrition": "把窗帘打开到 1/2 位置",
+        "description": "把窗帘打开到 1/2 位置",
         "properties": [
           {
             "id": "2-7",
@@ -131,7 +131,7 @@
       },
       {
         "name": "2/3",
-        "descrition": "把窗帘打开到 2/3 位置",
+        "description": "把窗帘打开到 2/3 位置",
         "properties": [
           {
             "id": "2-7",
