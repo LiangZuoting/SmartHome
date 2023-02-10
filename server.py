@@ -314,7 +314,7 @@ async def discover_device(request, ip: str):
     if protocol == 'midea':
         try:
             session = aiohttp.ClientSession()
-            cloud = MideaCloud(session, '18688867530', 'raul19870101', 'cn')
+            cloud = MideaCloud(session, 'your midea account', 'your password', 'cn')
             await cloud.login()
             token, key = await cloud.get_token(d['id'])
         except Exception as e:

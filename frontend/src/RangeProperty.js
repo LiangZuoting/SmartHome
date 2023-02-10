@@ -1,11 +1,11 @@
-import React, { useState } from "react";
-import { Slider } from "antd";
+import React, {useState} from "react";
+import {Slider} from "antd";
 import PropertyFrame from "./PropertyFrame";
 import 'antd/dist/antd.css';
 
 export default function RangeProperty(props) {
-  const [step, setStep] = useState(props.step || 1);
   const [value, setValue] = useState(props.value);
+  const step = props.step || 1;
 
   return <PropertyFrame name={props.name}>
     <Slider
@@ -14,7 +14,8 @@ export default function RangeProperty(props) {
       max={Number(props.max)} 
       marks={props.marks ? props.marks : null}
       step={step}
-      value={props.value}
+      value={value}
+      onChange={v => { setValue(v); }}
       onAfterChange={(v)=>{
         setValue(v);
         props.onChange(props.id, v);

@@ -1,5 +1,5 @@
 import React from "react";
-import { Row, Col } from "antd";
+import {Col, Row} from "antd";
 import 'antd/dist/antd.css';
 
 export default function PropertyFrame(props) {

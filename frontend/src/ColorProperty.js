@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Input } from "antd";
+import React, {useState} from "react";
+import {Input} from "antd";
 import PropertyFrame from "./PropertyFrame";
 import 'antd/dist/antd.css';
 

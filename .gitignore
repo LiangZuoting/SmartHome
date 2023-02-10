@@ -4,3 +4,5 @@
 /logs/*.log
 .idea
 __pycache__
+/backend/pycharm-venv
+/html

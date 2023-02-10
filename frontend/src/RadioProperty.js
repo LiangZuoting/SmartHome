@@ -1,4 +1,4 @@
-import { Radio } from "antd";
+import {Radio} from "antd";
 import PropertyFrame from "./PropertyFrame";
 
 export default function RadioProperty(props) {

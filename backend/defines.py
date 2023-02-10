@@ -1,0 +1,2 @@
+PROTOCOL_MIOT = 'miot'
+PROTOCOL_MIDEA = 'midea'
