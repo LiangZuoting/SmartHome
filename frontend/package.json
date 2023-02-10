@@ -15,8 +15,8 @@
     "web-vitals": "^1.1.1"
   },
   "scripts": {
-    "prebuild": "del ..\\static\\* /s /q & del ..\\templates\\* /s /q & del ..\\images\\* /s /q",
-    "postbuild": "xcopy build\\index.html ..\\templates\\ /y & xcopy build\\static ..\\static\\ /y /s /e & xcopy build\\favicon.ico ..\\ /y & xcopy build\\logo192.png ..\\ /y & xcopy build\\logo512.png ..\\ /y & xcopy build\\manifest.json ..\\ /y & xcopy public\\images ..\\images\\ /y /s /e",
+    "prebuild": "if exist ..\\html del ..\\html",
+    "postbuild": "mkdir ..\\html & xcopy .\\build\\* ..\\html /s",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",

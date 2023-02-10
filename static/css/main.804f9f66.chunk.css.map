@@ -1,1 +1,0 @@
-{"version":3,"sources":["webpack://src/custom.css"],"names":[],"mappings":"AAAA,KACI,cACJ,CAEA,MACI,wBACJ","file":"main.804f9f66.chunk.css","sourcesContent":["text {\r\n    font-size: 20px;\r\n}\r\n\r\n.root {\r\n    background-color: rgb(250,250,250);\r\n}"]}
