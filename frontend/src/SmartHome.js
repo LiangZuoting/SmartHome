@@ -9,7 +9,7 @@ export default class SmartHome extends React.Component {
     }
 
     componentDidMount() {
-        fetch("/devices").then(response => response.json()).then(data => {
+        fetch("api/devices").then(response => response.json()).then(data => {
             this.setState({ json: data }) });
     }
 

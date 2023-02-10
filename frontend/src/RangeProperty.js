@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Slider} from "antd";
 import PropertyFrame from "./PropertyFrame";
 import 'antd/dist/antd.css';
@@ -6,6 +6,10 @@ import 'antd/dist/antd.css';
 export default function RangeProperty(props) {
   const [value, setValue] = useState(props.value);
   const step = props.step || 1;
+
+    useEffect(() => {
+        setValue(props.value);
+    }, [props.value]);
 
   return <PropertyFrame name={props.name}>
     <Slider

@@ -15,8 +15,8 @@
     "web-vitals": "^1.1.1"
   },
   "scripts": {
-    "prebuild": "if exist ..\\html del ..\\html",
-    "postbuild": "mkdir ..\\html & xcopy .\\build\\* ..\\html /s",
+    "prebuild": "if exist ..\\html del /f /s /q ..\\html",
+    "postbuild": "mkdir ..\\html & xcopy .\\build\\* ..\\html /s /y",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",

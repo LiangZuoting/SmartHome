@@ -1,11 +1,15 @@
 import {Button, Col, Row, Slider} from "antd";
 import {MinusOutlined, PlusOutlined} from "@ant-design/icons";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import PropertyFrame from "./PropertyFrame";
 
 export default function RangePlusProperty(props) {
     const [value, setValue] = useState(props.value || props.min);
     const step = props.step || 1;
+
+    useEffect(() => {
+        setValue(props.value);
+    }, [props.value]);
 
     function handleSubClick() {
         const v = Math.max(value - step, props.min);

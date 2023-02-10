@@ -19,7 +19,7 @@ export default function SmartDevice(props) {
       let property = json.properties.find(p => p.id === pid);
       property.ip = json.ip;
       property.value = value;
-      fetch('/', {
+      fetch(`api/devices/${json.ip}`, {
           headers: {
               'content-type': 'application/json'
           },
@@ -34,7 +34,7 @@ export default function SmartDevice(props) {
 
   useEffect(() => {
       setLoading(true);
-      fetch(`/device/${json.ip}`).then(response => response.json()).then(data => {
+      fetch(`api/devices/${json.ip}`).then(response => response.json()).then(data => {
          setJson(data);
          setLoading(false);
       });
