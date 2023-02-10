@@ -1,4 +1,4 @@
-import { Input } from "antd";
+import {Input} from "antd";
 import PropertyFrame from "./PropertyFrame";
 
 export default function TextProperty(props) {

@@ -1,5 +1,5 @@
-import { Button, Col, Row, Slider } from "antd";
-import { MinusOutlined, PlusOutlined } from "@ant-design/icons";
+import {Button, Col, Row, Slider} from "antd";
+import {MinusOutlined, PlusOutlined} from "@ant-design/icons";
 import React, {useState} from "react";
 import PropertyFrame from "./PropertyFrame";
 
@@ -36,6 +36,7 @@ export default function RangePlusProperty(props) {
                         marks={props.marks ? props.marks : null}
                         step={step} 
                         value={value}
+                        onChange={v => { setValue(v); }}
                         onAfterChange={
                             (v) => {
                                 setValue(v);
