@@ -4,10 +4,13 @@ import './custom.css';
 import SmartHome from './SmartHome';
 import 'antd/dist/antd.css';
 import reportWebVitals from './reportWebVitals';
+import {ConfigProvider} from "antd";
 
 ReactDOM.render(
     <React.StrictMode>
-        <SmartHome />
+        <ConfigProvider autoInsertSpaceInButton={false}>
+            <SmartHome />
+        </ConfigProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );

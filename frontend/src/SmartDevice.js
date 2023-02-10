@@ -41,7 +41,7 @@ export default function SmartDevice(props) {
   }, [json.ip]);
 
   return (
-    <Modal visible={visible} title={<h2>{json.name}</h2>} centered={true} closable={true} afterClose={props.afterHide}
+    <Modal width={600} visible={visible} title={<h2>{json.name}</h2>} centered={true} closable={true} afterClose={props.afterHide}
     onCancel={()=>{
         setVisible(false);
     }}

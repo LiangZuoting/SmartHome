@@ -1,14 +1,22 @@
 import {Radio} from "antd";
 import PropertyFrame from "./PropertyFrame";
+import {useEffect, useState} from "react";
 
 export default function RadioProperty(props) {
+    const [value, setValue] = useState(props.value);
+
+    useEffect(() => {
+        setValue(props.value);
+    }, [props.value]);
+
     return (
         <PropertyFrame name={props.name}>
             <Radio.Group
                 style={{width: "100%"}} 
                 buttonStyle="solid"
-                value={props.value} 
+                value={value}
                 onChange={(e)=>{
+                    setValue(e.target.value);
                     props.onChange(props.id, e.target.value);
                     }}
             >

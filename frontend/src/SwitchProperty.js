@@ -1,10 +1,14 @@
 import {Button, Col, Row} from "antd";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import PropertyFrame from "./PropertyFrame";
 import 'antd/dist/antd.css';
 
 export default function SwitchProperty(props) {
   const [value, setValue] = useState(props.value);
+
+  useEffect(() => {
+    setValue(props.value);
+  }, [props.value]);
 
   return (
     <PropertyFrame name={props.name}>

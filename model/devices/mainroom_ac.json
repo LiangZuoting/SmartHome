@@ -95,28 +95,20 @@
             "value": 102
         },
         {
-            "name": "\u6446\u98ce",
-            "type": "radio",
-            "id": "swing_mode",
-            "values": [
-                {
-                    "value": 0,
-                    "name": "\u5173"
-                },
-                {
-                    "value": 3,
-                    "name": "\u5de6\u53f3"
-                },
-                {
-                    "value": 12,
-                    "name": "\u4e0a\u4e0b"
-                },
-                {
-                    "value": 15,
-                    "name": "\u4e0a\u4e0b\u5de6\u53f3"
-                }
-            ],
-            "value": 0
+            "name": "上下摆风",
+            "type": "bool",
+            "id": "swing_vertical",
+            "value": false,
+            "trueText": "开",
+            "falseText": "关"
+        },
+        {
+            "name": "左右摆风",
+            "type": "bool",
+            "id": "swing_horizontal",
+            "value": false,
+            "trueText": "开",
+            "falseText": "关"
         },
         {
             "name": "ECO",
