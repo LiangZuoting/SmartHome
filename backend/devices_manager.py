@@ -103,6 +103,13 @@ class DevicesManager:
         return model
 
     async def refresh_midea_device(self, ip):
+        # obtain latest values from server
+        d = await self.get_midea_device(ip)
+        try:
+            d.refresh_status(True)
+        except Exception as e:
+            logging.error(f'refresh_midea_device refresh_status error {format(e)}')
+
         model = self.device_models[ip]
         for p in model['properties']:
             value = await self.get_midea_property(ip, p['id'])
