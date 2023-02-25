@@ -21,7 +21,7 @@ app.blueprint(devices_blueprint)
 
 
 @app.before_server_start
-async def worker_start(_app):
+async def worker_start(_app, loop):
     _app.ctx.mgr = DevicesManager()
     _app.ctx.mgr.load_device_configs()
     scheduler = BackgroundScheduler()
